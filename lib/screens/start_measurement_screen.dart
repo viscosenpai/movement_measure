@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/enum/activity_state.dart';
+import 'package:movement_measure/enum/save_state.dart';
 import 'package:movement_measure/services/geolocator.dart';
 import 'package:movement_measure/widgets/circle_button.dart';
 
@@ -14,8 +16,11 @@ class StartMeasurementScreen extends StatefulWidget {
 
 class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
   late Timer timer;
-  late DateTime _time;
+  DateTime _time = DateTime.utc(0, 0, 0);
+  Duration second = const Duration(seconds: 1);
   ActivityState activityState = ActivityState.stop;
+  SaveState saveState = SaveState.stop;
+  GeolocatorService geolocator = GeolocatorService();
 
   late Map<String, double> startPosition = {};
   late Map<String, double> currentPosition = {};
@@ -23,17 +28,18 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
   double totalDistance = 0;
 
   void countingTimer() {
-    if (activityState != ActivityState.during) {
+    if (activityState == ActivityState.stop ||
+        activityState == ActivityState.pause) {
       setState(() {
         activityState = ActivityState.during;
       });
       timer = Timer.periodic(
-        Duration(seconds: 1),
+        second,
         (Timer timer) {
-          getCurrentPosition();
+          getCurrentPosition(currentPosition);
           setState(() {
             _time = _time.add(
-              Duration(seconds: 1),
+              second,
             );
           });
         },
@@ -45,43 +51,37 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
           timer.cancel();
         }
       });
+    } else if (activityState == ActivityState.clear) {
+      setState(() {
+        activityState = ActivityState.stop;
+        saveState = SaveState.stop;
+        clearLog();
+      });
     }
   }
 
   void countingStop() {
-    setState(() {
-      print('called countingStop');
-      activityState = ActivityState.stop;
-      timer.cancel();
-      // 表示時間を00:00:00に
-      // TODO: 後々移動する
-      _time = DateTime.utc(0, 0, 0);
-      // 移動距離も0mに
-      addDistance = 0;
-      totalDistance = 0;
-      // 初期位置を現在地に
-      getStartPosition();
-    });
-  }
-
-  void getStartPosition() async {
-    GeolocatorService geolocator = GeolocatorService();
-    try {
-      var position = await geolocator.getDeterminePosition();
-      startPosition['latitude'] = position.latitude;
-      startPosition['longitude'] = position.longitude;
-    } catch (e) {
-      print(e);
+    if (saveState == SaveState.stop && activityState != ActivityState.stop) {
+      setState(() {
+        activityState = ActivityState.clear;
+        saveState = SaveState.save;
+        timer.cancel();
+      });
+    } else if (saveState == SaveState.save) {
+      setState(() {
+        activityState = ActivityState.stop;
+        saveState = SaveState.stop;
+        // 時間と距離を記録
+        clearLog();
+      });
     }
   }
 
-  void getCurrentPosition() async {
-    GeolocatorService geolocator = GeolocatorService();
+  void getCurrentPosition(Map<String, double> onSetPosition) async {
     try {
       var position = await geolocator.getDeterminePosition();
-      currentPosition['latitude'] = position.latitude;
-      currentPosition['longitude'] = position.longitude;
-      setDistance();
+      onSetPosition['latitude'] = position.latitude;
+      onSetPosition['longitude'] = position.longitude;
     } catch (e) {
       print(e);
     }
@@ -89,7 +89,6 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
 
   void setDistance() {
     // 距離計算
-    GeolocatorService geolocator = GeolocatorService();
     var distance = geolocator.getBetweenDistance(
       startPosition['latitude'],
       startPosition['longitude'],
@@ -104,11 +103,21 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
     });
   }
 
+  void clearLog() {
+    // 表示時間を00:00:00に
+    _time = DateTime.utc(0, 0, 0);
+    // 移動距離も0mに
+    addDistance = 0;
+    totalDistance = 0;
+    // 初期位置を現在地に
+    getCurrentPosition(startPosition);
+  }
+
   @override
   void initState() {
     super.initState();
-    _time = DateTime.utc(0, 0, 0);
-    getStartPosition();
+    // 現在地を取得
+    getCurrentPosition(currentPosition);
   }
 
   @override
@@ -117,61 +126,40 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
       backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Align(
-          alignment: Alignment.center,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              const SizedBox(
+                height: 50.0,
+              ),
               Text(
                 '$totalDistance m',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 60.0,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: kMeasurementScreenTextStyle,
               ),
               Text(
                 DateFormat.Hms().format(_time),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 60.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 30.0,
+                style: kMeasurementScreenTextStyle,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleButton(
-                    activityState: activityState,
                     label: activityState.circleButtonLabel!,
+                    buttonPrimaryColor: activityState.activityColor,
+                    buttonTextColor: activityState.circleButtonTextColor,
                     onPressed: countingTimer,
                   ),
-                  ElevatedButton(
+                  CircleButton(
+                    label: saveState.circleButtonLabel!,
+                    buttonPrimaryColor: saveState.saveColor,
+                    buttonTextColor: saveState.circleButtonTextColor,
                     onPressed: countingStop,
-                    style: ElevatedButton.styleFrom(
-                      shape: CircleBorder(),
-                      primary: Colors.orangeAccent,
-                    ),
-                    child: Container(
-                      width: 150.0,
-                      height: 150.0,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: Text(
-                        'STOP',
-                        style: TextStyle(
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
                   ),
                 ],
+              ),
+              const SizedBox(
+                height: 100.0,
               ),
             ],
           ),
