@@ -16,6 +16,7 @@ dependencies:
   intl: ^0.17.0
   google_fonts: ^2.1.0
   geolocator: ^7.4.0
+  firebase_core: ^1.6.0
 
 dev_dependencies:
   flutter_test:
