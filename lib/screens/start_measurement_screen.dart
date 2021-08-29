@@ -18,12 +18,11 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
   late Timer timer;
   DateTime _time = DateTime.utc(0, 0, 0);
   Duration second = const Duration(seconds: 1);
+  int addDistanceCount = 5;
   ActivityState activityState = ActivityState.stop;
   SaveState saveState = SaveState.stop;
   GeolocatorService geolocator = GeolocatorService();
 
-  late Map<String, double> startPosition = {};
-  late Map<String, double> currentPosition = {};
   double addDistance = 0;
   double totalDistance = 0;
 
@@ -36,7 +35,11 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
       timer = Timer.periodic(
         second,
         (Timer timer) {
-          getCurrentPosition(currentPosition);
+          if (addDistanceCount == 0) {
+            setDistance();
+            addDistanceCount = 5;
+          }
+          addDistanceCount--;
           setState(() {
             _time = _time.add(
               second,
@@ -77,30 +80,21 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
     }
   }
 
-  void getCurrentPosition(Map<String, double> onSetPosition) async {
-    try {
-      var position = await geolocator.getDeterminePosition();
-      onSetPosition['latitude'] = position.latitude;
-      onSetPosition['longitude'] = position.longitude;
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void setDistance() {
+  void setDistance() async {
+    await geolocator.setCurrntPosition();
     // 距離計算
-    var distance = geolocator.getBetweenDistance(
-      startPosition['latitude'],
-      startPosition['longitude'],
-      currentPosition['latitude'],
-      currentPosition['longitude'],
-    );
+    var distance = geolocator.getBetweenDistance();
     print(distance);
     print(addDistance);
     addDistance += distance;
+    geolocator.eliminateDistance();
     setState(() {
       totalDistance = double.parse(addDistance.toStringAsFixed(2));
     });
+  }
+
+  void setInitialPosition() {
+    geolocator.setStartPosition();
   }
 
   void clearLog() {
@@ -110,14 +104,14 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
     addDistance = 0;
     totalDistance = 0;
     // 初期位置を現在地に
-    getCurrentPosition(startPosition);
+    setInitialPosition();
   }
 
   @override
   void initState() {
     super.initState();
     // 現在地を取得
-    getCurrentPosition(currentPosition);
+    setInitialPosition();
   }
 
   @override
