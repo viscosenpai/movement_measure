@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "608472292567",
+    "project_id": "movement-measure",
+    "storage_bucket": "movement-measure.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608472292567:android:9ee8332959eece63e36492",
+        "android_client_info": {
+          "package_name": "viscosenpai.github.io.movement_measure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608472292567-a73rpik3kvvn6um08l7ta3k5s16eme19.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDk2_aI0MjB2SRmi8MKOcBugy8OjdDoEEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "608472292567-a73rpik3kvvn6um08l7ta3k5s16eme19.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "608472292567-j2apfbhvvpqk53n24krgce9fs5761ntd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "viscosenpai.github.io.movementMeasure"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
