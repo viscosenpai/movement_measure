@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/enum/activity_state.dart';
 import 'package:movement_measure/enum/save_state.dart';
@@ -152,13 +153,66 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 100.0,
-              ),
+              // const SizedBox(
+              //   height: 100.0,
+              // ),
+              getRecordData(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class getRecordData extends StatefulWidget {
+  const getRecordData({Key? key}) : super(key: key);
+
+  @override
+  _getRecordDataState createState() => _getRecordDataState();
+}
+
+class _getRecordDataState extends State<getRecordData> {
+  @override
+  Widget build(BuildContext context) {
+    // CollectionReference records =
+    //     FirebaseFirestore.instance.collection('records');
+    final Stream<QuerySnapshot> _recordsStream =
+        FirebaseFirestore.instance.collection('records').snapshots();
+    return StreamBuilder<QuerySnapshot>(
+      stream: _recordsStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+        List<Text> recordList = [];
+        final records = snapshot.data!.docs.reversed;
+        records.forEach((record) {
+          final recordData = record.data() as Map;
+          final distance = recordData['movementDistance'];
+          final time = recordData['movementTime'];
+          print(distance);
+          print(time);
+          final recordText = Text(
+            '$distance $time',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          );
+          recordList.add(recordText);
+        });
+
+        return Expanded(
+          child: ListView(
+            children: recordList,
+          ),
+        );
+      },
     );
   }
 }
