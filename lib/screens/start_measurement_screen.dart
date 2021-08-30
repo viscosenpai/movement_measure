@@ -7,6 +7,7 @@ import 'package:movement_measure/enum/activity_state.dart';
 import 'package:movement_measure/enum/save_state.dart';
 import 'package:movement_measure/services/geolocator.dart';
 import 'package:movement_measure/widgets/circle_button.dart';
+import 'package:movement_measure/widgets/modal_record_list_sheet.dart';
 
 class StartMeasurementScreen extends StatefulWidget {
   const StartMeasurementScreen({Key? key}) : super(key: key);
@@ -26,6 +27,9 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
 
   double addDistance = 0;
   double totalDistance = 0;
+
+  CollectionReference records =
+      FirebaseFirestore.instance.collection('records');
 
   void countingTimer() {
     if (activityState == ActivityState.stop ||
@@ -72,10 +76,11 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
         timer.cancel();
       });
     } else if (saveState == SaveState.save) {
+      activityState = ActivityState.stop;
+      saveState = SaveState.stop;
+      print('saveMovementRecord');
+      saveMovementRecord();
       setState(() {
-        activityState = ActivityState.stop;
-        saveState = SaveState.stop;
-        // 時間と距離を記録
         clearLog();
       });
     }
@@ -106,6 +111,22 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
     totalDistance = 0;
     // 初期位置を現在地に
     setInitialPosition();
+  }
+
+  Future<void> saveMovementRecord() {
+    print(records);
+    print(totalDistance);
+    print(_time);
+    var now = new DateTime.now();
+    Timestamp createdAtTimestamp = Timestamp.fromDate(now);
+    return records
+        .add({
+          'movementDistance': totalDistance,
+          'movementTime': DateFormat.Hms().format(_time),
+          'recordDate': createdAtTimestamp,
+        })
+        .then((value) => print(value))
+        .catchError((error) => print("Failed to add user: $error"));
   }
 
   @override
@@ -153,66 +174,58 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                   ),
                 ],
               ),
-              // const SizedBox(
-              //   height: 100.0,
-              // ),
-              getRecordData(),
+              const SizedBox(
+                height: 30.0,
+              ),
+              Container(
+                width: 300,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 30.0,
+                  vertical: 8.0,
+                ),
+                decoration: BoxDecoration(
+                  color: Color(0xAA1D1919),
+                  borderRadius: BorderRadius.circular(35.0),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    IconButton(
+                      onPressed: () {},
+                      iconSize: 40.0,
+                      color: Colors.white,
+                      icon: Icon(Icons.textsms_outlined),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        BuildContext mainContext = context;
+                        showModalBottomSheet<void>(
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (BuildContext context) {
+                            return ModalRecordListSheet(
+                                mainContext: mainContext);
+                          },
+                        );
+                      },
+                      iconSize: 42.0,
+                      color: Colors.white,
+                      icon: Icon(Icons.history),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      iconSize: 42.0,
+                      color: Colors.white,
+                      icon: Icon(Icons.settings_outlined),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class getRecordData extends StatefulWidget {
-  const getRecordData({Key? key}) : super(key: key);
-
-  @override
-  _getRecordDataState createState() => _getRecordDataState();
-}
-
-class _getRecordDataState extends State<getRecordData> {
-  @override
-  Widget build(BuildContext context) {
-    // CollectionReference records =
-    //     FirebaseFirestore.instance.collection('records');
-    final Stream<QuerySnapshot> _recordsStream =
-        FirebaseFirestore.instance.collection('records').snapshots();
-    return StreamBuilder<QuerySnapshot>(
-      stream: _recordsStream,
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Something went wrong');
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
-        }
-
-        List<Text> recordList = [];
-        final records = snapshot.data!.docs.reversed;
-        records.forEach((record) {
-          final recordData = record.data() as Map;
-          final distance = recordData['movementDistance'];
-          final time = recordData['movementTime'];
-          print(distance);
-          print(time);
-          final recordText = Text(
-            '$distance $time',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          );
-          recordList.add(recordText);
-        });
-
-        return Expanded(
-          child: ListView(
-            children: recordList,
-          ),
-        );
-      },
     );
   }
 }
