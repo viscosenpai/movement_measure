@@ -106,6 +106,7 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
   void clearLog() {
     // 表示時間を00:00:00に
     _time = DateTime.utc(0, 0, 0);
+    addDistanceCount = 5;
     // 移動距離も0mに
     addDistance = 0;
     totalDistance = 0;

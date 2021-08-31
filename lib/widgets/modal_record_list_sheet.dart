@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:movement_measure/widgets/record_card.dart';
 
 class ModalRecordListSheet extends StatelessWidget {
   const ModalRecordListSheet({
@@ -66,37 +67,24 @@ class _getRecordDataState extends State<getRecordData> {
           return Text("Loading");
         }
 
-        List<ListTile> recordList = [];
+        List<Widget> recordCardList = [];
         final records = snapshot.data!.docs.reversed;
         records.forEach((record) {
           final recordData = record.data() as Map;
-          final distance = recordData['movementDistance'];
-          final time = recordData['movementTime'];
-          final date = recordData['recordDate'];
-          print(distance);
-          print(time);
-          print(DateFormat('yyyy-MM-dd kk:mm:ss')
-              .format(date.toDate())
-              .toString());
-          final recordText = ListTile(
-            title: Text(
-              '$distance m',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-            subtitle: Text(
-              time,
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          );
-          recordList.add(recordText);
+          final distance = recordData['movementDistance'] as double;
+          final time = recordData['movementTime'] as String;
+          final dateTime = DateFormat('yyyy-MM-dd kk:mm:ss')
+              .format(recordData['recordDate'].toDate())
+              .toString();
+
+          RecordCard recordCard =
+              RecordCard(dateTime: dateTime, time: time, distance: distance);
+
+          recordCardList.add(recordCard);
         });
 
         return ListView(
-          children: recordList,
+          children: recordCardList,
         );
       },
     );
