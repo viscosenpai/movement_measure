@@ -7,7 +7,7 @@ import 'package:movement_measure/enum/activity_state.dart';
 import 'package:movement_measure/enum/save_state.dart';
 import 'package:movement_measure/services/geolocator.dart';
 import 'package:movement_measure/widgets/circle_button.dart';
-import 'package:movement_measure/widgets/modal_record_list_sheet.dart';
+import 'package:movement_measure/screens/record_list_screen.dart';
 
 class StartMeasurementScreen extends StatefulWidget {
   const StartMeasurementScreen({Key? key}) : super(key: key);
@@ -199,15 +199,9 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                     ),
                     IconButton(
                       onPressed: () {
-                        BuildContext mainContext = context;
-                        showModalBottomSheet<void>(
-                          backgroundColor: Colors.transparent,
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (BuildContext context) {
-                            return ModalRecordListSheet(
-                                mainContext: mainContext);
-                          },
+                        Navigator.push(
+                          context,
+                          kPpageRouteBuilder(RecordListScreen()),
                         );
                       },
                       iconSize: 42.0,
@@ -230,3 +224,19 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
     );
   }
 }
+
+
+// ModalRecordListSheet(mainContext: mainContext); //遷移先
+
+// showModalBottomSheet<void>(
+//   backgroundColor: Colors.transparent,
+//   context: context,
+//   isScrollControlled: true,
+//   builder: (BuildContext context) => Navigator(
+//     onGenerateRoute: (context) =>
+//         MaterialPageRoute<ModalRecordListSheet>(
+//       builder: (context) => ModalRecordListSheet(
+//           mainContext: mainContext),
+//     ),
+//   ),
+// );

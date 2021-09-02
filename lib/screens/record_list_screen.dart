@@ -4,27 +4,18 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:movement_measure/widgets/record_card.dart';
 
-class ModalRecordListSheet extends StatelessWidget {
-  const ModalRecordListSheet({
-    Key? key,
-    required this.mainContext,
-  }) : super(key: key);
-
-  final BuildContext mainContext;
+class RecordListScreen extends StatelessWidget {
+  const RecordListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
       child: Container(
-        padding: EdgeInsets.only(
-          top: MediaQuery.of(mainContext).padding.top,
-        ),
         child: Scaffold(
-          extendBodyBehindAppBar: true,
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.black54,
             elevation: 0,
             leading: IconButton(
               onPressed: () {
@@ -52,10 +43,10 @@ class getRecordData extends StatefulWidget {
 class _getRecordDataState extends State<getRecordData> {
   @override
   Widget build(BuildContext context) {
-    // CollectionReference records =
-    //     FirebaseFirestore.instance.collection('records');
-    final Stream<QuerySnapshot> _recordsStream =
-        FirebaseFirestore.instance.collection('records').snapshots();
+    final Stream<QuerySnapshot> _recordsStream = FirebaseFirestore.instance
+        .collection('records')
+        .orderBy('recordDate', descending: true)
+        .snapshots();
     return StreamBuilder<QuerySnapshot>(
       stream: _recordsStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -68,7 +59,7 @@ class _getRecordDataState extends State<getRecordData> {
         }
 
         List<Widget> recordCardList = [];
-        final records = snapshot.data!.docs.reversed;
+        final records = snapshot.data!.docs;
         records.forEach((record) {
           final recordData = record.data() as Map;
           final distance = recordData['movementDistance'] as double;
@@ -77,8 +68,11 @@ class _getRecordDataState extends State<getRecordData> {
               .format(recordData['recordDate'].toDate())
               .toString();
 
-          RecordCard recordCard =
-              RecordCard(dateTime: dateTime, time: time, distance: distance);
+          RecordCard recordCard = RecordCard(
+              id: record.id,
+              dateTime: dateTime,
+              time: time,
+              distance: distance);
 
           recordCardList.add(recordCard);
         });

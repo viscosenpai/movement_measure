@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:movement_measure/utilities/constants.dart';
+import 'package:movement_measure/screens/record_detail_screen.dart';
 
 class RecordCard extends StatelessWidget {
   const RecordCard({
     Key? key,
+    required this.id,
     required this.dateTime,
     required this.time,
     required this.distance,
   }) : super(key: key);
 
+  final String id;
   final String dateTime;
   final String time;
   final double distance;
@@ -20,7 +24,13 @@ class RecordCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
       child: InkWell(
         splashColor: Colors.orangeAccent,
-        onTap: () {},
+        onTap: () {
+          Navigator.pop(context);
+          Navigator.push(
+            context,
+            kPpageRouteBuilder(RecordDetailScreen(id: id)),
+          );
+        },
         child: ListTile(
           contentPadding:
               EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
