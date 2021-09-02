@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/enum/activity_state.dart';
 import 'package:movement_measure/enum/save_state.dart';
 import 'package:movement_measure/services/geolocator.dart';
+import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/widgets/circle_button.dart';
 import 'package:movement_measure/screens/record_list_screen.dart';
 
@@ -30,6 +32,8 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
 
   CollectionReference records =
       FirebaseFirestore.instance.collection('records');
+
+  late String userId;
 
   void countingTimer() {
     if (activityState == ActivityState.stop ||
@@ -118,10 +122,12 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
     print(records);
     print(totalDistance);
     print(_time);
+    print(userId);
     var now = new DateTime.now();
     Timestamp createdAtTimestamp = Timestamp.fromDate(now);
     return records
         .add({
+          'userId': userId,
           'movementDistance': totalDistance,
           'movementTime': DateFormat.Hms().format(_time),
           'recordDate': createdAtTimestamp,
@@ -139,6 +145,8 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+    userId = authService.user.uid;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
