@@ -1,7 +1,8 @@
 import 'dart:ui';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/screens/record_list_screen.dart';
 import 'package:movement_measure/utilities/constants.dart';
 
@@ -51,11 +52,10 @@ class RecordDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference records =
-        FirebaseFirestore.instance.collection('records');
+    final recordService = Provider.of<RecordService>(context);
 
     return FutureBuilder<DocumentSnapshot>(
-      future: records.doc(id).get(),
+      future: recordService.getRecordDetail(id),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -67,11 +67,10 @@ class RecordDetail extends StatelessWidget {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
-          final dateTime = DateFormat('yyyy-MM-dd kk:mm:ss')
-              .format(data['recordDate'].toDate())
-              .toString();
+          recordService.initDetail(snapshot);
+          final dateTime = recordService
+              .toDateTimeString(recordService.record['recordDate']);
+
           return Container(
             color: Color(0x99000000),
             margin: EdgeInsets.all(8.0),
@@ -95,14 +94,14 @@ class RecordDetail extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${data["movementTime"]}',
+                      '${recordService.record["movementTime"]}',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 30.0,
                       ),
                     ),
                     Text(
-                      '${data["movementDistance"]} m',
+                      '${recordService.record["movementDistance"]} m',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 30.0,

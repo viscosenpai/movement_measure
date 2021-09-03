@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:movement_measure/services/auth_service.dart';
+import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/widgets/record_card.dart';
 
 class RecordListScreen extends StatelessWidget {
@@ -43,14 +45,15 @@ class getRecordData extends StatefulWidget {
 class _getRecordDataState extends State<getRecordData> {
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _recordsStream = FirebaseFirestore.instance
-        .collection('records')
-        .orderBy('recordDate', descending: true)
-        .snapshots();
+    final authService = Provider.of<AuthService>(context);
+    final recordService = Provider.of<RecordService>(context);
+    recordService.uid = authService.user.uid;
+
     return StreamBuilder<QuerySnapshot>(
-      stream: _recordsStream,
+      stream: recordService.getRecordStream(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
+          print(snapshot.error);
           return Text('Something went wrong');
         }
 
@@ -59,20 +62,15 @@ class _getRecordDataState extends State<getRecordData> {
         }
 
         List<Widget> recordCardList = [];
-        final records = snapshot.data!.docs;
-        records.forEach((record) {
-          final recordData = record.data() as Map;
-          final distance = recordData['movementDistance'] as double;
-          final time = recordData['movementTime'] as String;
-          final dateTime = DateFormat('yyyy-MM-dd kk:mm:ss')
-              .format(recordData['recordDate'].toDate())
-              .toString();
+        recordService.init(snapshot.data!.docs);
+        recordService.records.forEach((record) {
+          final dateTime = recordService.toDateTimeString(record.recordDate);
 
           RecordCard recordCard = RecordCard(
-              id: record.id,
+              id: record.docId,
               dateTime: dateTime,
-              time: time,
-              distance: distance);
+              time: record.movementTime,
+              distance: record.movementDistance);
 
           recordCardList.add(recordCard);
         });
