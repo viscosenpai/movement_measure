@@ -1,9 +1,9 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/services/record_service.dart';
+import 'package:movement_measure/widgets/backdrop_base_sheet.dart';
 import 'package:movement_measure/widgets/record_card.dart';
 
 class RecordListScreen extends StatelessWidget {
@@ -11,26 +11,9 @@ class RecordListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-      child: Container(
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.black54,
-            elevation: 0,
-            leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              iconSize: 30.0,
-              icon: Icon(Icons.close),
-            ),
-            title: Text('History'),
-          ),
-          body: getRecordData(),
-        ),
-      ),
+    return BackdropBaseSheet(
+      sheetTitle: 'History',
+      bodyComponent: getRecordData(),
     );
   }
 }

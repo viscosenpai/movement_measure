@@ -9,6 +9,7 @@ import 'package:movement_measure/enum/save_state.dart';
 import 'package:movement_measure/services/geolocator.dart';
 import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/widgets/circle_button.dart';
+import 'package:movement_measure/screens/settings_screen.dart';
 import 'package:movement_measure/screens/record_list_screen.dart';
 
 class StartMeasurementScreen extends StatefulWidget {
@@ -217,7 +218,12 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                       icon: Icon(Icons.history),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          kPpageRouteBuilder(SettingsScreen()),
+                        );
+                      },
                       iconSize: 42.0,
                       color: Colors.white,
                       icon: Icon(Icons.settings_outlined),
