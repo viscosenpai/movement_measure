@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:movement_measure/services/record_service.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/enum/activity_state.dart';
 import 'package:movement_measure/enum/save_state.dart';
@@ -31,65 +31,7 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
   double addDistance = 0;
   double totalDistance = 0;
 
-  CollectionReference records =
-      FirebaseFirestore.instance.collection('records');
-
   late String userId;
-
-  void countingTimer() {
-    if (activityState == ActivityState.stop ||
-        activityState == ActivityState.pause) {
-      setState(() {
-        activityState = ActivityState.during;
-      });
-      timer = Timer.periodic(
-        second,
-        (Timer timer) {
-          if (addDistanceCount == 0) {
-            setDistance();
-            addDistanceCount = 5;
-          }
-          addDistanceCount--;
-          setState(() {
-            _time = _time.add(
-              second,
-            );
-          });
-        },
-      );
-    } else if (activityState == ActivityState.during) {
-      setState(() {
-        activityState = ActivityState.pause;
-        if (timer.isActive) {
-          timer.cancel();
-        }
-      });
-    } else if (activityState == ActivityState.clear) {
-      setState(() {
-        activityState = ActivityState.stop;
-        saveState = SaveState.stop;
-        clearLog();
-      });
-    }
-  }
-
-  void countingStop() {
-    if (saveState == SaveState.stop && activityState != ActivityState.stop) {
-      setState(() {
-        activityState = ActivityState.clear;
-        saveState = SaveState.save;
-        timer.cancel();
-      });
-    } else if (saveState == SaveState.save) {
-      activityState = ActivityState.stop;
-      saveState = SaveState.stop;
-      print('saveMovementRecord');
-      saveMovementRecord();
-      setState(() {
-        clearLog();
-      });
-    }
-  }
 
   void setDistance() async {
     await geolocator.setCurrntPosition();
@@ -119,35 +61,75 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
     setInitialPosition();
   }
 
-  Future<void> saveMovementRecord() {
-    print(records);
-    print(totalDistance);
-    print(_time);
-    print(userId);
-    var now = new DateTime.now();
-    Timestamp createdAtTimestamp = Timestamp.fromDate(now);
-    return records
-        .add({
-          'userId': userId,
-          'movementDistance': totalDistance,
-          'movementTime': DateFormat.Hms().format(_time),
-          'recordDate': createdAtTimestamp,
-        })
-        .then((value) => print(value))
-        .catchError((error) => print("Failed to add user: $error"));
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // 現在地を取得
-    setInitialPosition();
-  }
-
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
+    final recordService = Provider.of<RecordService>(context);
     userId = authService.user.uid;
+    recordService.uid = userId;
+
+    void countingTimer() {
+      if (activityState == ActivityState.stop ||
+          activityState == ActivityState.pause) {
+        setState(() {
+          activityState = ActivityState.during;
+        });
+        recordService.initDocument(userId);
+        setInitialPosition();
+        timer = Timer.periodic(
+          second,
+          (Timer timer) {
+            if (addDistanceCount == 0) {
+              setDistance();
+              addDistanceCount = 5;
+            }
+            addDistanceCount--;
+            setState(() {
+              _time = _time.add(
+                second,
+              );
+            });
+          },
+        );
+      } else if (activityState == ActivityState.during) {
+        setState(() {
+          activityState = ActivityState.pause;
+          if (timer.isActive) {
+            timer.cancel();
+          }
+        });
+      } else if (activityState == ActivityState.clear) {
+        recordService.deleteDocument();
+        setState(() {
+          activityState = ActivityState.stop;
+          saveState = SaveState.stop;
+          clearLog();
+        });
+      }
+    }
+
+    void countingStop() {
+      if (saveState == SaveState.stop && activityState != ActivityState.stop) {
+        setState(() {
+          activityState = ActivityState.clear;
+          saveState = SaveState.save;
+          timer.cancel();
+        });
+      } else if (saveState == SaveState.save) {
+        activityState = ActivityState.stop;
+        saveState = SaveState.stop;
+        print(totalDistance);
+        print(_time);
+        print(userId);
+        recordService.setDocument(userId, totalDistance, _time);
+        recordService.saveDocument();
+        setState(() {
+          clearLog();
+        });
+        print(recordService.record);
+      }
+    }
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
@@ -238,19 +220,3 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
     );
   }
 }
-
-
-// ModalRecordListSheet(mainContext: mainContext); //遷移先
-
-// showModalBottomSheet<void>(
-//   backgroundColor: Colors.transparent,
-//   context: context,
-//   isScrollControlled: true,
-//   builder: (BuildContext context) => Navigator(
-//     onGenerateRoute: (context) =>
-//         MaterialPageRoute<ModalRecordListSheet>(
-//       builder: (context) => ModalRecordListSheet(
-//           mainContext: mainContext),
-//     ),
-//   ),
-// );

@@ -17,7 +17,7 @@ class RecordDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+      filter: ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(

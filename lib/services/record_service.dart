@@ -39,6 +39,47 @@ class RecordService extends ChangeNotifier {
     return dataPath.doc(docId).get();
   }
 
+  void setDocument(String userId, double distance, DateTime time) {
+    var now = new DateTime.now();
+    Timestamp updatedAtTimestamp = Timestamp.fromDate(now);
+    _record['userId'] = userId;
+    _record['movementDistance'] = distance;
+    _record['movementTime'] = DateFormat.Hms().format(time);
+    _record['recordDate'] = updatedAtTimestamp;
+  }
+
+  Future<void> initDocument(String userId) {
+    return dataPath.add({
+      'userId': userId,
+      'movementDistance': '',
+      'movementTime': DateFormat.Hms().format(DateTime.utc(0, 0, 0)),
+      'recordDate': Timestamp.now(),
+    }).then((value) async {
+      var snapshot = await value.get();
+      var docId = snapshot.id;
+      var doc = snapshot.data() as Map<String, dynamic>;
+      doc['docId'] = docId;
+      _record = doc;
+      notifyListeners();
+    }).catchError((error) => print("Failed to add user: $error"));
+  }
+
+  Future<void> saveDocument() {
+    return dataPath
+        .doc(_record['docId'])
+        .update(_record)
+        .then((value) => print('document update'))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
+
+  Future<void> deleteDocument() {
+    return dataPath
+        .doc(_record['docId'])
+        .delete()
+        .then((value) => print('document delete'))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
+
   String toDateTimeString(dynamic recordDate) {
     return DateFormat('yyyy-MM-dd kk:mm:ss')
         .format(recordDate.toDate())
