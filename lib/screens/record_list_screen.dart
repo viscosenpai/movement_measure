@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/widgets/backdrop_base_sheet.dart';
@@ -44,22 +45,20 @@ class _getRecordDataState extends State<getRecordData> {
           return Text("Loading");
         }
 
-        List<Widget> recordCardList = [];
         recordService.init(snapshot.data!.docs);
-        recordService.records.forEach((record) {
-          final dateTime = recordService.toDateTimeString(record.recordDate);
-
-          RecordCard recordCard = RecordCard(
-              id: record.docId,
-              dateTime: dateTime,
-              time: record.movementTime,
-              distance: record.movementDistance);
-
-          recordCardList.add(recordCard);
-        });
 
         return ListView(
-          children: recordCardList,
+          children: recordService.records
+              .where((redord) => redord.movementTime != kDefaultMovementTime)
+              .map((record) {
+            final dateTime = recordService.toDateTimeString(record.recordDate);
+
+            return RecordCard(
+                id: record.docId,
+                dateTime: dateTime,
+                time: record.movementTime,
+                distance: record.movementDistance);
+          }).toList(),
         );
       },
     );

@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 const kMeasurementScreenTextStyle = TextStyle(
@@ -5,6 +6,8 @@ const kMeasurementScreenTextStyle = TextStyle(
   fontSize: 60.0,
   fontWeight: FontWeight.bold,
 );
+
+String kDefaultMovementTime = DateFormat.Hms().format(DateTime.utc(0, 0, 0));
 
 PageRouteBuilder<dynamic> kPpageRouteBuilder(Widget widget) {
   return PageRouteBuilder(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/models/record_model.dart';
 
 class RecordService extends ChangeNotifier {
@@ -51,8 +52,8 @@ class RecordService extends ChangeNotifier {
   Future<void> initDocument(String userId) {
     return dataPath.add({
       'userId': userId,
-      'movementDistance': '',
-      'movementTime': DateFormat.Hms().format(DateTime.utc(0, 0, 0)),
+      'movementDistance': 0.0,
+      'movementTime': kDefaultMovementTime,
       'recordDate': Timestamp.now(),
     }).then((value) async {
       var snapshot = await value.get();
