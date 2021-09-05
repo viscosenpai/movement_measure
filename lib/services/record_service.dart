@@ -80,7 +80,7 @@ class RecordService extends ChangeNotifier {
       'recordDate': Timestamp.now(),
     }).then((value) async {
       var snapshot = await value.get();
-      var docId = snapshot.id;
+      docId = snapshot.id;
       var doc = snapshot.data() as Map<String, dynamic>;
       doc['docId'] = docId;
       _record = doc;
@@ -102,6 +102,17 @@ class RecordService extends ChangeNotifier {
         .delete()
         .then((value) => print('document delete'))
         .catchError((error) => print("Failed to add user: $error"));
+  }
+
+  Future<void> addComment(String docId, Map<String, dynamic> map) {
+    return dataPath
+        .doc(docId)
+        .collection('comments')
+        .add(map)
+        .then((value) async {
+      var snapshot = await value.get();
+      print(snapshot);
+    }).catchError((error) => print("Failed to add user: $error"));
   }
 
   String toDateTimeString(dynamic recordDate) {
