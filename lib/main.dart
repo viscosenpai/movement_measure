@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:movement_measure/services/auth_service.dart';
+import 'package:movement_measure/services/timer.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/screens/background_title_screen.dart';
 import 'package:movement_measure/screens/start_measurement_screen.dart';
@@ -13,6 +14,7 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => AuthService.instance()),
+      ChangeNotifierProvider(create: (_) => TimerStore()),
       ChangeNotifierProvider(create: (_) => RecordService()),
     ],
     child: MyApp(),

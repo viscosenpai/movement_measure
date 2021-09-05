@@ -1,13 +1,10 @@
-import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:movement_measure/services/record_service.dart';
 import 'package:provider/provider.dart';
 import 'package:movement_measure/utilities/constants.dart';
-import 'package:movement_measure/enum/activity_state.dart';
-import 'package:movement_measure/enum/save_state.dart';
-import 'package:movement_measure/services/geolocator.dart';
 import 'package:movement_measure/services/auth_service.dart';
+import 'package:movement_measure/services/record_service.dart';
+import 'package:movement_measure/services/timer.dart';
 import 'package:movement_measure/screens/settings_screen.dart';
 import 'package:movement_measure/screens/record_list_screen.dart';
 import 'package:movement_measure/screens/comment_screem.dart';
@@ -21,113 +18,37 @@ class StartMeasurementScreen extends StatefulWidget {
 }
 
 class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
-  late Timer timer;
-  DateTime _time = DateTime.utc(0, 0, 0);
-  Duration second = const Duration(seconds: 1);
-  int addDistanceCount = 5;
-  ActivityState activityState = ActivityState.stop;
-  SaveState saveState = SaveState.stop;
-  GeolocatorService geolocator = GeolocatorService();
-
-  double addDistance = 0;
-  double totalDistance = 0;
-
-  late String userId;
-
-  void setDistance() async {
-    await geolocator.setCurrntPosition();
-    // 距離計算
-    var distance = geolocator.getBetweenDistance();
-    print(distance);
-    print(addDistance);
-    addDistance += distance;
-    geolocator.eliminateDistance();
-    setState(() {
-      totalDistance = double.parse(addDistance.toStringAsFixed(2));
-    });
-  }
-
-  void setInitialPosition() {
-    geolocator.setStartPosition();
-  }
-
-  void clearLog() {
-    // 表示時間を00:00:00に
-    _time = DateTime.utc(0, 0, 0);
-    addDistanceCount = 5;
-    // 移動距離も0mに
-    addDistance = 0;
-    totalDistance = 0;
-    // 初期位置を現在地に
-    setInitialPosition();
-  }
-
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
+    final timerStore = Provider.of<TimerStore>(context);
     final recordService = Provider.of<RecordService>(context);
-    userId = authService.user.uid;
+    String userId = authService.user.uid;
     recordService.uid = userId;
 
     void countingTimer() {
-      if (activityState == ActivityState.stop ||
-          activityState == ActivityState.pause) {
-        setState(() {
-          activityState = ActivityState.during;
-        });
+      if (timerStore.activityStatus == ActivityStatus.stop ||
+          timerStore.activityStatus == ActivityStatus.pause) {
         recordService.initDocument(userId);
-        setInitialPosition();
-        timer = Timer.periodic(
-          second,
-          (Timer timer) {
-            if (addDistanceCount == 0) {
-              setDistance();
-              addDistanceCount = 5;
-            }
-            addDistanceCount--;
-            setState(() {
-              _time = _time.add(
-                second,
-              );
-            });
-          },
-        );
-      } else if (activityState == ActivityState.during) {
-        setState(() {
-          activityState = ActivityState.pause;
-          if (timer.isActive) {
-            timer.cancel();
-          }
-        });
-      } else if (activityState == ActivityState.clear) {
+        timerStore.startTimer();
+      } else if (timerStore.activityStatus == ActivityStatus.during) {
+        timerStore.pauseTimer();
+      } else if (timerStore.activityStatus == ActivityStatus.clear) {
         recordService.deleteDocument();
-        setState(() {
-          activityState = ActivityState.stop;
-          saveState = SaveState.stop;
-          clearLog();
-        });
+        timerStore.clearTimer();
       }
     }
 
     void countingStop() {
-      if (saveState == SaveState.stop && activityState != ActivityState.stop) {
-        setState(() {
-          activityState = ActivityState.clear;
-          saveState = SaveState.save;
-          timer.cancel();
-        });
-      } else if (saveState == SaveState.save) {
-        activityState = ActivityState.stop;
-        saveState = SaveState.stop;
-        print(totalDistance);
-        print(_time);
+      if (timerStore.saveStatus == SaveStatus.stop &&
+          timerStore.activityStatus != ActivityStatus.stop) {
+        timerStore.stopTimer();
+      } else if (timerStore.saveStatus == SaveStatus.save) {
         print(userId);
-        recordService.setDocument(userId, totalDistance, _time);
+        recordService.setDocument(
+            userId, timerStore.totalDistance, timerStore.time);
         recordService.saveDocument();
-        setState(() {
-          clearLog();
-        });
-        print(recordService.record);
+        timerStore.clearTimer();
       }
     }
 
@@ -143,26 +64,29 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                 height: 50.0,
               ),
               Text(
-                '$totalDistance m',
+                '${timerStore.totalDistance} m',
                 style: kMeasurementScreenTextStyle,
               ),
               Text(
-                DateFormat.Hms().format(_time),
+                DateFormat.Hms().format(timerStore.time),
                 style: kMeasurementScreenTextStyle,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleButton(
-                    label: activityState.circleButtonLabel!,
-                    buttonPrimaryColor: activityState.activityColor,
-                    buttonTextColor: activityState.circleButtonTextColor,
+                    // label: activityState.circleButtonLabel!,
+                    label: timerStore.activityStatus.circleButtonLabel!,
+                    buttonPrimaryColor: timerStore.activityStatus.activityColor,
+                    buttonTextColor:
+                        timerStore.activityStatus.circleButtonTextColor,
                     onPressed: countingTimer,
                   ),
                   CircleButton(
-                    label: saveState.circleButtonLabel!,
-                    buttonPrimaryColor: saveState.saveColor,
-                    buttonTextColor: saveState.circleButtonTextColor,
+                    label: timerStore.saveStatus.circleButtonLabel!,
+                    buttonPrimaryColor: timerStore.saveStatus.saveColor,
+                    buttonTextColor:
+                        timerStore.saveStatus.circleButtonTextColor,
                     onPressed: countingStop,
                   ),
                 ],
