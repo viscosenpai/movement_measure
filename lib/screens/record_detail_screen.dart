@@ -109,12 +109,67 @@ class RecordDetail extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 30.0,
+                ),
+                _getCommentData(docId: id),
               ],
             ),
           );
         }
 
         return Text("loading");
+      },
+    );
+  }
+}
+
+class _getCommentData extends StatelessWidget {
+  _getCommentData({Key? key, required this.docId}) : super(key: key);
+
+  final String docId;
+
+  Widget build(BuildContext context) {
+    final recordService = Provider.of<RecordService>(context);
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: recordService.getCommentStream(docId),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          print(snapshot.error);
+          return Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+        if (snapshot.hasData) {
+          recordService.initComment(snapshot.data!.docs);
+        }
+
+        var aaa = recordService.comments.map((comment) {
+          return Column(
+            children: <Widget>[
+              Text(
+                '${comment.comment}',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                '${comment.commentTime}',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          );
+        }).toList();
+
+        return Column(
+          children: aaa,
+        );
       },
     );
   }

@@ -6,10 +6,12 @@ class BackdropBaseSheet extends StatelessWidget {
     Key? key,
     required this.sheetTitle,
     required this.bodyComponent,
+    this.actions,
   }) : super(key: key);
 
   final String sheetTitle;
   final Widget? bodyComponent;
+  final List<Widget>? actions;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class BackdropBaseSheet extends StatelessWidget {
               icon: Icon(Icons.close),
             ),
             title: Text('$sheetTitle'),
+            actions: actions,
           ),
           body: bodyComponent,
         ),

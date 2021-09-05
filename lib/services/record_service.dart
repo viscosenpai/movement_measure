@@ -3,11 +3,15 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/models/record_model.dart';
+import 'package:movement_measure/models/comment_model.dart';
 
 class RecordService extends ChangeNotifier {
   late String uid;
+  late String docId;
   late List _records;
   late Map<String, dynamic> _record;
+  late List _comments;
+  late Map<String, dynamic> _comment;
 
   RecordService();
 
@@ -16,6 +20,8 @@ class RecordService extends ChangeNotifier {
 
   List get records => _records;
   Map<String, dynamic> get record => _record;
+  List get comments => _comments;
+  Map<String, dynamic> get comment => _comment;
 
   void init(List<DocumentSnapshot> docs) {
     _records = docs.map((doc) {
@@ -23,6 +29,15 @@ class RecordService extends ChangeNotifier {
       map['docId'] = doc.id;
       return Record.fromMap(map);
     }).toList();
+  }
+
+  void initComment(List<DocumentSnapshot> docs) {
+    _comments = docs.map((doc) {
+      var map = doc.data() as Map;
+      print(map);
+      return Comment.fromMap(map);
+    }).toList();
+    print(_comments);
   }
 
   void initDetail(AsyncSnapshot<DocumentSnapshot<Object?>> doc) {
@@ -38,6 +53,14 @@ class RecordService extends ChangeNotifier {
 
   Future<DocumentSnapshot<Object?>> getRecordDetail(String docId) {
     return dataPath.doc(docId).get();
+  }
+
+  Stream<QuerySnapshot<Object?>> getCommentStream(String docId) {
+    return dataPath
+        .doc(docId)
+        .collection('comments')
+        .orderBy('commentTime')
+        .snapshots();
   }
 
   void setDocument(String userId, double distance, DateTime time) {

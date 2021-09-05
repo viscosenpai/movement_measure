@@ -8,9 +8,10 @@ import 'package:movement_measure/enum/activity_state.dart';
 import 'package:movement_measure/enum/save_state.dart';
 import 'package:movement_measure/services/geolocator.dart';
 import 'package:movement_measure/services/auth_service.dart';
-import 'package:movement_measure/widgets/circle_button.dart';
 import 'package:movement_measure/screens/settings_screen.dart';
 import 'package:movement_measure/screens/record_list_screen.dart';
+import 'package:movement_measure/screens/comment_screem.dart';
+import 'package:movement_measure/widgets/circle_button.dart';
 
 class StartMeasurementScreen extends StatefulWidget {
   const StartMeasurementScreen({Key? key}) : super(key: key);
@@ -183,7 +184,12 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          kPpageRouteBuilder(CommentScreen()),
+                        );
+                      },
                       iconSize: 40.0,
                       color: Colors.white,
                       icon: Icon(Icons.textsms_outlined),
