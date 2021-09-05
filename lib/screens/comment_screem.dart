@@ -56,13 +56,11 @@ class _CommentScreenState extends State<CommentScreen> {
             if (comment.length != 0 &&
                 timerStore.activityStatus != ActivityStatus.stop &&
                 timerStore.saveStatus != SaveStatus.save) {
-              print(recordService.docId);
-              print(timerStore.time);
-              print(comment);
               recordService.addComment(recordService.docId, {
                 'comment': comment,
                 'commentTime': DateFormat.Hms().format(timerStore.time),
               });
+              Navigator.pop(context);
             }
           },
           child: Text(
