@@ -34,10 +34,8 @@ class RecordService extends ChangeNotifier {
   void initComment(List<DocumentSnapshot> docs) {
     _comments = docs.map((doc) {
       var map = doc.data() as Map;
-      print(map);
       return Comment.fromMap(map);
     }).toList();
-    print(_comments);
   }
 
   void initDetail(AsyncSnapshot<DocumentSnapshot<Object?>> doc) {
@@ -109,10 +107,8 @@ class RecordService extends ChangeNotifier {
         .doc(docId)
         .collection('comments')
         .add(map)
-        .then((value) async {
-      var snapshot = await value.get();
-      print(snapshot);
-    }).catchError((error) => print("Failed to add user: $error"));
+        .then((value) async {})
+        .catchError((error) => print("Failed to add user: $error"));
   }
 
   String toDateTimeString(dynamic recordDate) {

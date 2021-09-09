@@ -5,9 +5,9 @@ import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/services/timer.dart';
-import 'package:movement_measure/screens/settings_screen.dart';
+import 'package:movement_measure/screens/settings/settings_screen.dart';
 import 'package:movement_measure/screens/record_list_screen.dart';
-import 'package:movement_measure/screens/comment_screem.dart';
+import 'package:movement_measure/screens/comment/comment_screem.dart';
 import 'package:movement_measure/widgets/circle_button.dart';
 
 class StartMeasurementScreen extends StatefulWidget {
@@ -44,7 +44,6 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
           timerStore.activityStatus != ActivityStatus.stop) {
         timerStore.stopTimer();
       } else if (timerStore.saveStatus == SaveStatus.save) {
-        print(userId);
         recordService.setDocument(
             userId, timerStore.totalDistance, timerStore.time);
         recordService.saveDocument();
