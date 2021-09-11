@@ -43,20 +43,20 @@ class AboutMenuList extends StatelessWidget {
   Widget build(BuildContext context) {
     List titleList = [
       'How to use',
-      'Terms of service',
-      'Privacy policy',
+      // 'Terms of service',
+      // 'Privacy policy',
     ];
 
     List iconList = [
       Icons.info_outline,
-      Icons.person_outline,
-      Icons.privacy_tip_outlined,
+      // Icons.person_outline,
+      // Icons.privacy_tip_outlined,
     ];
 
     List pushedScreenList = [
       HowToUseScreen(),
-      Container(),
-      Container(),
+      // Container(),
+      // Container(),
     ];
 
     return ListView.builder(

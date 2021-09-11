@@ -1,11 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:movement_measure/utilities/constants.dart';
-import 'package:movement_measure/screens/settings/about/about_screen.dart';
-import 'package:movement_measure/widgets/introduction_pages.dart';
+import 'package:movement_measure/screens/settings/settings_screen.dart';
 
-class HowToUseScreen extends StatelessWidget {
-  const HowToUseScreen({Key? key}) : super(key: key);
+class ContactScreen extends StatelessWidget {
+  const ContactScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,23 +20,15 @@ class HowToUseScreen extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                kPpageRouteBuilder(AboutScreen()),
+                kPpageRouteBuilder(SettingsScreen()),
               );
             },
             iconSize: 30.0,
             icon: Icon(Icons.navigate_before),
           ),
-          title: Text('How to Use'),
+          title: Text('Contact Us'),
         ),
-        body: IntroductionPages(
-          onDone: () {
-            Navigator.pop(context);
-            Navigator.push(
-              context,
-              kPpageRouteBuilder(AboutScreen()),
-            );
-          },
-        ),
+        body: Container(),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movement_measure/screens/settings/about/about_screen.dart';
+import 'package:movement_measure/screens/settings/contact/contact_screen.dart';
 import 'package:movement_measure/widgets/backdrop_base_sheet.dart';
 import 'package:movement_measure/widgets/settingsMenuItem.dart';
 
@@ -25,8 +26,8 @@ class SettingsMenuList extends StatelessWidget {
       '',
       '',
       '',
-      '',
-      '',
+      'Share',
+      // 'Contact Us',
       'About MovementMeasure',
     ];
 
@@ -35,8 +36,8 @@ class SettingsMenuList extends StatelessWidget {
       Icons.home,
       Icons.home,
       Icons.home,
-      Icons.home,
-      Icons.home,
+      Icons.share_outlined,
+      // Icons.email,
       Icons.straighten,
     ];
 
@@ -46,7 +47,7 @@ class SettingsMenuList extends StatelessWidget {
       Container(),
       Container(),
       Container(),
-      Container(),
+      // ContactScreen(),
       AboutScreen(),
     ];
 
