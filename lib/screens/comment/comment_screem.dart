@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:movement_measure/generated/l10n.dart';
 import 'package:movement_measure/services/timer.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/widgets/backdrop_base_sheet.dart';
@@ -21,7 +22,8 @@ class _CommentScreenState extends State<CommentScreen> {
     final recordService = Provider.of<RecordService>(context);
 
     return BackdropBaseSheet(
-      sheetTitle: 'Comment',
+      // sheetTitle: 'Comment',
+      sheetTitle: S.of(context).comment,
       bodyComponent: Center(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(5.0),
@@ -64,7 +66,7 @@ class _CommentScreenState extends State<CommentScreen> {
             }
           },
           child: Text(
-            'add',
+            S.of(context).add,
             style: TextStyle(
               color: Colors.white,
               fontSize: 20.0,

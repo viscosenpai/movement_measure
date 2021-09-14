@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:movement_measure/generated/l10n.dart';
 import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/services/record_service.dart';
@@ -13,7 +14,7 @@ class RecordListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackdropBaseSheet(
-      sheetTitle: 'History',
+      sheetTitle: S.of(context).history,
       bodyComponent: getRecordData(),
     );
   }
@@ -43,6 +44,19 @@ class _getRecordDataState extends State<getRecordData> {
 
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Text("Loading");
+        }
+
+        if (snapshot.data!.docs.length == 0) {
+          return Center(
+            child: Text(
+              'No Record',
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          );
         }
 
         recordService.init(snapshot.data!.docs);

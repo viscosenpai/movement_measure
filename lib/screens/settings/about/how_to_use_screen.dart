@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:movement_measure/generated/l10n.dart';
 import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/screens/settings/about/about_screen.dart';
 import 'package:movement_measure/widgets/introduction_pages.dart';
@@ -27,7 +28,7 @@ class HowToUseScreen extends StatelessWidget {
             iconSize: 30.0,
             icon: Icon(Icons.navigate_before),
           ),
-          title: Text('How to Use'),
+          title: Text(S.of(context).howToUse),
         ),
         body: IntroductionPages(
           onDone: () {

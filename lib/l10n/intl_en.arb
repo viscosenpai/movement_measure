@@ -1,0 +1,16 @@
+{
+  "comment": "Comment",
+  "add": "add",
+  "history": "History",
+  "detail": "Detail",
+  "settings": "Settings",
+  "aboutMenuTitle": "About MovementMeasure",
+  "howToUse": "How to use",
+  "howToUseTitle1": "Let's record your journey.",
+  "howToUseTitle2": "Let's leave some memories.",
+  "howToUseTitle3": "Let's look back on our daily journey.",
+  "howToUseBody1": "This is a simple lifelog application that only measures time and distance traveled.",
+  "howToUseBody2": "You can record events that occur during the journey with comments.",
+  "howToUseBody3": "You can look back on your daily journey like a diary.",
+  "done": "Done"
+}

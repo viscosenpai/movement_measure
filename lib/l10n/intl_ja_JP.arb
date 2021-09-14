@@ -1,0 +1,16 @@
+{
+  "comment": "コメント",
+  "add": "追加",
+  "history": "履歴",
+  "detail": "記録",
+  "settings": "設定",
+  "aboutMenuTitle": "MovementMeasureについて",
+  "howToUse": "使い方",
+  "howToUseTitle1": "あなたの道のりを記録しよう",
+  "howToUseTitle2": "思い出を残そう",
+  "howToUseTitle3": "毎日の道のりを振り返ろう",
+  "howToUseBody1": "時間と移動した距離を計るだけのシンプルなライフログアプリです",
+  "howToUseBody2": "移動中に起こったイベントをコメントで記録できます",
+  "howToUseBody3": "日記のように日々の道のりの振り返りができます",
+  "done": "完了"
+}

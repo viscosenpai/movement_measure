@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movement_measure/generated/l10n.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
 class IntroductionPages extends StatelessWidget {
@@ -11,16 +12,36 @@ class IntroductionPages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> tutorialContents = [
+      {
+        'imagePath': 'tutorial_1.png',
+        'title': S.of(context).howToUseTitle1,
+        'body': S.of(context).howToUseBody1,
+      },
+      {
+        'imagePath': 'tutorial_2.png',
+        'title': S.of(context).howToUseTitle2,
+        'body': S.of(context).howToUseBody2,
+      },
+      {
+        'imagePath': 'tutorial_3.png',
+        'title': S.of(context).howToUseTitle3,
+        'body': S.of(context).howToUseBody3,
+      },
+    ];
+
     return IntroductionScreen(
       controlsMargin: EdgeInsets.all(16.0),
       globalBackgroundColor: Color(0x99000000),
       pages: tutorialPageViews(tutorialContents),
-      done: const Text("Done",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18.0,
-            fontWeight: FontWeight.w600,
-          )),
+      done: Text(
+        S.of(context).done,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 18.0,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
       onDone: onDone,
       showNextButton: false,
       dotsDecorator: DotsDecorator(
@@ -36,24 +57,6 @@ class IntroductionPages extends StatelessWidget {
     );
   }
 }
-
-List<Map<String, dynamic>> tutorialContents = [
-  {
-    'imagePath': 'tutorial_1.png',
-    'title': 'あなたの道のりを記録しよう',
-    'body': '時間と移動した距離を計るだけのシンプルなライフログアプリです',
-  },
-  {
-    'imagePath': 'tutorial_2.png',
-    'title': '思い出を残そう',
-    'body': '移動中に起こったイベントをコメントで記録できます',
-  },
-  {
-    'imagePath': 'tutorial_3.png',
-    'title': '毎日の道のりを振り返ろう',
-    'body': '日記のように日々の道のりの振り返りができます',
-  },
-];
 
 List<PageViewModel> tutorialPageViews(
     List<Map<String, dynamic>> tutorialContentList) {

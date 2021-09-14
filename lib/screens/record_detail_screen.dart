@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:movement_measure/generated/l10n.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/screens/record_list_screen.dart';
 import 'package:movement_measure/utilities/constants.dart';
@@ -34,7 +35,7 @@ class RecordDetailScreen extends StatelessWidget {
             iconSize: 30.0,
             icon: Icon(Icons.navigate_before),
           ),
-          title: Text('Detail'),
+          title: Text(S.of(context).detail),
         ),
         body: RecordDetail(id: id),
       ),

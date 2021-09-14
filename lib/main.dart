@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'generated/l10n.dart';
 import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/services/timer.dart';
 import 'package:movement_measure/services/record_service.dart';
@@ -27,6 +29,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        // 翻訳テキストを呼び出す"S"クラスのデリゲートを登録
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
       theme: ThemeData(
         textTheme: GoogleFonts.jetBrainsMonoTextTheme(
           Theme.of(context).textTheme,

@@ -19,7 +19,7 @@ class BackdropBaseSheet extends StatelessWidget {
       filter: ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0),
       child: Container(
         child: Scaffold(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Color(0x99000000),
           appBar: AppBar(
             backgroundColor: Colors.black54,
             elevation: 0,

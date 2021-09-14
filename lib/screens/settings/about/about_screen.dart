@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:movement_measure/generated/l10n.dart';
 import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/screens/settings/settings_screen.dart';
 import 'package:movement_measure/screens/settings/about/how_to_use_screen.dart';
@@ -13,7 +14,7 @@ class AboutScreen extends StatelessWidget {
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color(0x99000000),
         appBar: AppBar(
           backgroundColor: Colors.black54,
           elevation: 0,
@@ -28,7 +29,7 @@ class AboutScreen extends StatelessWidget {
             iconSize: 30.0,
             icon: Icon(Icons.navigate_before),
           ),
-          title: Text('About MovementMeasure'),
+          title: Text(S.of(context).aboutMenuTitle),
         ),
         body: AboutMenuList(),
       ),
@@ -42,7 +43,7 @@ class AboutMenuList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List titleList = [
-      'How to use',
+      S.of(context).howToUse,
       // 'Terms of service',
       // 'Privacy policy',
     ];

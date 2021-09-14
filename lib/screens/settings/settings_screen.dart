@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movement_measure/generated/l10n.dart';
 import 'package:movement_measure/screens/settings/about/about_screen.dart';
-import 'package:movement_measure/screens/settings/contact/contact_screen.dart';
 import 'package:movement_measure/widgets/backdrop_base_sheet.dart';
 import 'package:movement_measure/widgets/settingsMenuItem.dart';
 
@@ -10,7 +10,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackdropBaseSheet(
-      sheetTitle: 'Settings',
+      sheetTitle: S.of(context).settings,
       bodyComponent: SettingsMenuList(),
     );
   }
@@ -28,7 +28,7 @@ class SettingsMenuList extends StatelessWidget {
       '',
       'Share',
       // 'Contact Us',
-      'About MovementMeasure',
+      S.of(context).aboutMenuTitle,
     ];
 
     List iconList = [
