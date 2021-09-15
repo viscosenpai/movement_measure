@@ -6,6 +6,8 @@ import 'package:movement_measure/generated/l10n.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/screens/record_list_screen.dart';
 import 'package:movement_measure/utilities/constants.dart';
+import 'package:movement_measure/widgets/message_box.dart';
+import 'package:movement_measure/widgets/loader.dart';
 
 class RecordDetailScreen extends StatelessWidget {
   const RecordDetailScreen({
@@ -60,11 +62,15 @@ class RecordDetail extends StatelessWidget {
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Text("Something went wrong");
+          return MessageBox(message: 'Something went wrong');
         }
 
         if (snapshot.hasData && !snapshot.data!.exists) {
-          return Text("Document does not exist");
+          return MessageBox(message: 'Document does not exist');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Loader();
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
@@ -119,7 +125,7 @@ class RecordDetail extends StatelessWidget {
           );
         }
 
-        return Text("loading");
+        return Loader();
       },
     );
   }
@@ -138,18 +144,18 @@ class _getCommentData extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           print(snapshot.error);
-          return Text('Something went wrong');
+          return MessageBox(message: 'Something went wrong');
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
+          return Loader();
         }
 
         if (snapshot.hasData) {
           recordService.initComment(snapshot.data!.docs);
         }
 
-        var aaa = recordService.comments.map((comment) {
+        var comments = recordService.comments.map((comment) {
           return Column(
             children: <Widget>[
               Text(
@@ -169,7 +175,7 @@ class _getCommentData extends StatelessWidget {
         }).toList();
 
         return Column(
-          children: aaa,
+          children: comments,
         );
       },
     );

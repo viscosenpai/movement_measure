@@ -7,6 +7,8 @@ import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/widgets/backdrop_base_sheet.dart';
 import 'package:movement_measure/widgets/record_card.dart';
+import 'package:movement_measure/widgets/message_box.dart';
+import 'package:movement_measure/widgets/loader.dart';
 
 class RecordListScreen extends StatelessWidget {
   const RecordListScreen({Key? key}) : super(key: key);
@@ -39,11 +41,11 @@ class _getRecordDataState extends State<getRecordData> {
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           print(snapshot.error);
-          return Text('Something went wrong');
+          return MessageBox(message: 'Something went wrong');
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
+          return Loader();
         }
 
         if (snapshot.data!.docs.length == 0) {
