@@ -1,8 +1,10 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/services/auth_service.dart';
+import 'package:movement_measure/services/ad_state.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/services/timer.dart';
 import 'package:movement_measure/screens/settings/settings_screen.dart';
@@ -18,6 +20,26 @@ class StartMeasurementScreen extends StatefulWidget {
 }
 
 class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
+  late BannerAd banner;
+  bool isLoadedBannerAd = false;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final adState = Provider.of<AdState>(context);
+    adState.initialization.then((status) {
+      setState(() {
+        banner = BannerAd(
+          adUnitId: adState.bannerAdUnitId,
+          size: AdSize.fullBanner,
+          request: AdRequest(),
+          // listener: adState.adListener,
+          listener: BannerAdListener(),
+        )..load();
+        isLoadedBannerAd = true;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
@@ -60,7 +82,7 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const SizedBox(
-                height: 50.0,
+                height: 30.0,
               ),
               Text(
                 '${timerStore.totalDistance} m',
@@ -89,9 +111,6 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                     onPressed: countingStop,
                   ),
                 ],
-              ),
-              const SizedBox(
-                height: 30.0,
               ),
               Container(
                 width: 300,
@@ -142,6 +161,15 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                   ],
                 ),
               ),
+              if (isLoadedBannerAd)
+                Container(
+                  height: 50,
+                  child: AdWidget(ad: banner),
+                )
+              else
+                SizedBox(
+                  height: 50,
+                )
             ],
           ),
         ),

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'generated/l10n.dart';
 import 'package:movement_measure/services/auth_service.dart';
+import 'package:movement_measure/services/ad_state.dart';
 import 'package:movement_measure/services/timer.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/screens/background_title_screen.dart';
@@ -12,10 +14,14 @@ import 'package:movement_measure/screens/start_measurement_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final initFuture = MobileAds.instance.initialize();
+  // final adState = AdState(initFuture);
   await Firebase.initializeApp();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => AuthService.instance()),
+      ChangeNotifierProvider(create: (_) => AdState(initFuture)),
+      // Provider<AdState>.value(value: adState),
       ChangeNotifierProvider(create: (_) => TimerStore()),
       ChangeNotifierProvider(create: (_) => RecordService()),
     ],
