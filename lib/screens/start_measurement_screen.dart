@@ -41,6 +41,15 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
   }
 
   @override
+  void didUpdateWidget(covariant StartMeasurementScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print('didUpdateWidget');
+    setState(() {
+      isLoadedBannerAd = true;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
     final timerStore = Provider.of<TimerStore>(context);
@@ -71,6 +80,13 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
         recordService.saveDocument();
         timerStore.clearTimer();
       }
+    }
+
+    void pushedSubPage(Widget subPage) {
+      Navigator.push(
+        context,
+        kPpageRouteBuilder(subPage),
+      );
     }
 
     return Scaffold(
@@ -127,10 +143,7 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                   children: <Widget>[
                     IconButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          kPpageRouteBuilder(CommentScreen()),
-                        );
+                        pushedSubPage(CommentScreen());
                       },
                       iconSize: 40.0,
                       color: Colors.white,
@@ -138,10 +151,7 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                     ),
                     IconButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          kPpageRouteBuilder(RecordListScreen()),
-                        );
+                        pushedSubPage(RecordListScreen());
                       },
                       iconSize: 42.0,
                       color: Colors.white,
@@ -149,10 +159,7 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                     ),
                     IconButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          kPpageRouteBuilder(SettingsScreen()),
-                        );
+                        pushedSubPage(SettingsScreen());
                       },
                       iconSize: 42.0,
                       color: Colors.white,

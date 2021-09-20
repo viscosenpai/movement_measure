@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'generated/l10n.dart';
 import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/services/ad_state.dart';
@@ -11,6 +12,7 @@ import 'package:movement_measure/services/timer.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/screens/background_title_screen.dart';
 import 'package:movement_measure/screens/start_measurement_screen.dart';
+import 'package:movement_measure/widgets/introduction_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,8 +56,29 @@ class MyApp extends StatelessWidget {
 }
 
 class SignProcess extends StatelessWidget {
+  void _showTutorial(BuildContext context) async {
+    final pref = await SharedPreferences.getInstance();
+
+    if (pref.getBool('isAlreadyFirstLaunch') != true) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => IntroductionPages(
+            onDone: () {
+              Navigator.pop(context);
+            },
+          ),
+          fullscreenDialog: true,
+        ),
+      );
+      pref.setBool('isAlreadyFirstLaunch', true);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance
+        ?.addPostFrameCallback((_) => _showTutorial(context));
     return Consumer(
       builder: (context, AuthService authService, _) {
         // ログインの状態に応じて処理を遷移させる。
@@ -70,8 +93,7 @@ class SignProcess extends StatelessWidget {
             return Center(child: BackgroundTitleScreen());
           case Status.authenticated:
             print("authenticated");
-            break; // DbProcess();へ進む
-
+            break;
         }
         return StackScreens();
       },
