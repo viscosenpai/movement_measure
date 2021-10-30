@@ -2,7 +2,7 @@
     package="viscosenpai.github.io.movement_measure">
    <application
         android:label="movement_measure"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -1,6 +1,14 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
+const String DEV_VERSION_CONFIG = "dev_app_version";
+const String CONFIG_VERSION = "force_update_app_version";
+
+// releaseビルドかどうかで取得するconfig名を変更
+final configName = bool.fromEnvironment('dart.vm.product')
+    ? CONFIG_VERSION
+    : DEV_VERSION_CONFIG;
+
 const kMeasurementScreenTextStyle = TextStyle(
   color: Colors.white,
   fontSize: 60.0,

@@ -92,92 +92,102 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
-        child: Align(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(
-                height: 30.0,
-              ),
-              Text(
-                '${timerStore.totalDistance} m',
-                style: kMeasurementScreenTextStyle,
-              ),
-              Text(
-                DateFormat.Hms().format(timerStore.time),
-                style: kMeasurementScreenTextStyle,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleButton(
-                    // label: activityState.circleButtonLabel!,
-                    label: timerStore.activityStatus.circleButtonLabel!,
-                    buttonPrimaryColor: timerStore.activityStatus.activityColor,
-                    buttonTextColor:
-                        timerStore.activityStatus.circleButtonTextColor,
-                    onPressed: countingTimer,
-                  ),
-                  CircleButton(
-                    label: timerStore.saveStatus.circleButtonLabel!,
-                    buttonPrimaryColor: timerStore.saveStatus.saveColor,
-                    buttonTextColor:
-                        timerStore.saveStatus.circleButtonTextColor,
-                    onPressed: countingStop,
-                  ),
-                ],
-              ),
-              Container(
-                width: 300,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 30.0,
-                  vertical: 8.0,
+        child: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                const SizedBox(
+                  height: 30.0,
                 ),
-                decoration: BoxDecoration(
-                  color: Color(0xAA1D1919),
-                  borderRadius: BorderRadius.circular(35.0),
+                Text(
+                  '${timerStore.totalDistance} m',
+                  style: kMeasurementScreenTextStyle,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    IconButton(
-                      onPressed: () {
-                        pushedSubPage(CommentScreen());
-                      },
-                      iconSize: 40.0,
-                      color: Colors.white,
-                      icon: Icon(Icons.textsms_outlined),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        pushedSubPage(RecordListScreen());
-                      },
-                      iconSize: 42.0,
-                      color: Colors.white,
-                      icon: Icon(Icons.history),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        pushedSubPage(SettingsScreen());
-                      },
-                      iconSize: 42.0,
-                      color: Colors.white,
-                      icon: Icon(Icons.settings_outlined),
-                    ),
-                  ],
+                Text(
+                  DateFormat.Hms().format(timerStore.time),
+                  style: kMeasurementScreenTextStyle,
                 ),
-              ),
-              if (isLoadedBannerAd)
-                Container(
-                  height: 50,
-                  child: AdWidget(ad: banner),
-                )
-              else
                 SizedBox(
-                  height: 50,
+                  height: 240,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleButton(
+                        // label: activityState.circleButtonLabel!,
+                        label: timerStore.activityStatus.circleButtonLabel!,
+                        buttonPrimaryColor:
+                            timerStore.activityStatus.activityColor,
+                        buttonTextColor:
+                            timerStore.activityStatus.circleButtonTextColor,
+                        onPressed: countingTimer,
+                      ),
+                      CircleButton(
+                        label: timerStore.saveStatus.circleButtonLabel!,
+                        buttonPrimaryColor: timerStore.saveStatus.saveColor,
+                        buttonTextColor:
+                            timerStore.saveStatus.circleButtonTextColor,
+                        onPressed: countingStop,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: 300,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 30.0,
+                    vertical: 10.0,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40.0),
+                    border: Border.all(color: Colors.grey, width: 1.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      IconButton(
+                        onPressed: () {
+                          pushedSubPage(CommentScreen());
+                        },
+                        iconSize: 40.0,
+                        color: Colors.white,
+                        icon: Icon(Icons.textsms_outlined),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          pushedSubPage(RecordListScreen());
+                        },
+                        iconSize: 42.0,
+                        color: Colors.white,
+                        icon: Icon(Icons.history),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          pushedSubPage(SettingsScreen());
+                        },
+                        iconSize: 42.0,
+                        color: Colors.white,
+                        icon: Icon(Icons.settings_outlined),
+                      ),
+                    ],
+                  ),
+                ),
+                if (isLoadedBannerAd)
+                  Container(
+                    height: 50,
+                    child: AdWidget(ad: banner),
+                  )
+                else
+                  SizedBox(
+                    height: 50,
+                  ),
+                SizedBox(
+                  height: 60.0,
                 )
-            ],
+              ],
+            ),
           ),
         ),
       ),

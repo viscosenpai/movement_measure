@@ -47,7 +47,9 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       theme: ThemeData(
         textTheme: GoogleFonts.jetBrainsMonoTextTheme(
-          Theme.of(context).textTheme,
+          Theme.of(context).textTheme.copyWith(
+                bodyText1: TextStyle(color: Colors.white),
+              ),
         ),
       ),
       home: SignProcess(),
@@ -110,7 +112,7 @@ class StackScreens extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       fit: StackFit.expand,
-      children: const <Widget>[
+      children: <Widget>[
         BackgroundTitleScreen(),
         StartMeasurementScreen(),
       ],
