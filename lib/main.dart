@@ -45,7 +45,9 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
+      themeMode: ThemeMode.light,
       theme: ThemeData(
+        appBarTheme: AppBarTheme(brightness: Brightness.dark),
         textTheme: GoogleFonts.jetBrainsMonoTextTheme(
           Theme.of(context).textTheme.copyWith(
                 bodyText1: TextStyle(color: Colors.white),
