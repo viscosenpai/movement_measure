@@ -8,22 +8,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'generated/l10n.dart';
 import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/services/ad_state.dart';
+import 'package:movement_measure/services/version_check_service.dart';
 import 'package:movement_measure/services/timer.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/screens/background_title_screen.dart';
 import 'package:movement_measure/screens/start_measurement_screen.dart';
 import 'package:movement_measure/widgets/introduction_pages.dart';
+import 'package:movement_measure/widgets/updater.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final initFuture = MobileAds.instance.initialize();
-  // final adState = AdState(initFuture);
   await Firebase.initializeApp();
+  final checker = await VersionCheckService();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => AuthService.instance()),
       ChangeNotifierProvider(create: (_) => AdState(initFuture)),
-      // Provider<AdState>.value(value: adState),
+      ChangeNotifierProvider(create: (_) => checker),
       ChangeNotifierProvider(create: (_) => TimerStore()),
       ChangeNotifierProvider(create: (_) => RecordService()),
     ],
@@ -117,6 +119,7 @@ class StackScreens extends StatelessWidget {
       children: <Widget>[
         BackgroundTitleScreen(),
         StartMeasurementScreen(),
+        Updater(),
       ],
     );
   }
