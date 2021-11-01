@@ -22,31 +22,31 @@ class SettingsMenuList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List titleList = [
-      '',
-      '',
-      '',
-      '',
-      'Share',
+      // '',
+      // '',
+      // '',
+      // '',
+      // 'Share',
       // 'Contact Us',
       S.of(context).aboutMenuTitle,
     ];
 
     List iconList = [
-      Icons.home,
-      Icons.home,
-      Icons.home,
-      Icons.home,
-      Icons.share_outlined,
+      // Icons.home,
+      // Icons.home,
+      // Icons.home,
+      // Icons.home,
+      // Icons.share_outlined,
       // Icons.email,
       Icons.straighten,
     ];
 
     List pushedScreenList = [
-      Container(),
-      Container(),
-      Container(),
-      Container(),
-      Container(),
+      // Container(),
+      // Container(),
+      // Container(),
+      // Container(),
+      // Container(),
       // ContactScreen(),
       AboutScreen(),
     ];
@@ -57,6 +57,7 @@ class SettingsMenuList extends StatelessWidget {
         return SettingsMenuItem(
           menuTitle: titleList[index],
           menuIcon: iconList[index],
+          ispushed: true,
           pushedScreen: pushedScreenList[index],
         );
       },

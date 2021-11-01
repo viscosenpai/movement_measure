@@ -38,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "howToUseTitle1": MessageLookupByLibrary.simpleMessage("あなたの道のりを記録しよう"),
         "howToUseTitle2": MessageLookupByLibrary.simpleMessage("思い出を残そう"),
         "howToUseTitle3": MessageLookupByLibrary.simpleMessage("毎日の道のりを振り返ろう"),
-        "settings": MessageLookupByLibrary.simpleMessage("設定")
+        "settings": MessageLookupByLibrary.simpleMessage("設定"),
+        "version": MessageLookupByLibrary.simpleMessage("バージョン情報")
       };
 }

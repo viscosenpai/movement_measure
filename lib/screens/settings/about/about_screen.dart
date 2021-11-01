@@ -46,18 +46,26 @@ class AboutMenuList extends StatelessWidget {
       S.of(context).howToUse,
       // 'Terms of service',
       // 'Privacy policy',
+      S.of(context).version,
     ];
 
     List iconList = [
       Icons.info_outline,
       // Icons.person_outline,
       // Icons.privacy_tip_outlined,
+      Icons.smartphone_outlined,
+    ];
+
+    List isPushedList = [
+      true,
+      false,
     ];
 
     List pushedScreenList = [
       HowToUseScreen(),
       // Container(),
       // Container(),
+      Container(),
     ];
 
     return ListView.builder(
@@ -66,6 +74,7 @@ class AboutMenuList extends StatelessWidget {
         return SettingsMenuItem(
           menuTitle: titleList[index],
           menuIcon: iconList[index],
+          ispushed: isPushedList[index],
           pushedScreen: pushedScreenList[index],
         );
       },

@@ -41,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Let\'s leave some memories."),
         "howToUseTitle3": MessageLookupByLibrary.simpleMessage(
             "Let\'s look back on our daily journey."),
-        "settings": MessageLookupByLibrary.simpleMessage("Settings")
+        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "version": MessageLookupByLibrary.simpleMessage("Version")
       };
 }

@@ -12,5 +12,6 @@
   "howToUseBody1": "This is a simple lifelog application that only measures time and distance traveled.",
   "howToUseBody2": "You can record events that occur during the journey with comments.",
   "howToUseBody3": "You can look back on your daily journey like a diary.",
-  "done": "Done"
+  "done": "Done",
+  "version": "Version"
 }
