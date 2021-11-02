@@ -41,15 +41,6 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
   }
 
   @override
-  void didUpdateWidget(covariant StartMeasurementScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    print('didUpdateWidget');
-    setState(() {
-      isLoadedBannerAd = true;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
     final timerStore = Provider.of<TimerStore>(context);

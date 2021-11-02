@@ -9,6 +9,13 @@ final configName = bool.fromEnvironment('dart.vm.product')
     ? CONFIG_VERSION
     : DEV_VERSION_CONFIG;
 
+final androidAdUnitId = bool.fromEnvironment('dart.vm.product')
+    ? "ca-app-pub-8516003834400073/5201328040"
+    : "ca-app-pub-3940256099942544/6300978111";
+final iosAdUnitId = bool.fromEnvironment('dart.vm.product')
+    ? "ca-app-pub-8516003834400073/7655513295"
+    : "ca-app-pub-3940256099942544/2934735716";
+
 const kMeasurementScreenTextStyle = TextStyle(
   color: Colors.white,
   fontSize: 60.0,
