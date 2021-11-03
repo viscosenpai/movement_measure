@@ -7,6 +7,7 @@ import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/services/ad_state.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/services/timer.dart';
+import 'package:movement_measure/services/geolocator.dart';
 import 'package:movement_measure/screens/settings/settings_screen.dart';
 import 'package:movement_measure/screens/record_list_screen.dart';
 import 'package:movement_measure/screens/comment/comment_screem.dart';
@@ -38,6 +39,13 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
         isLoadedBannerAd = true;
       });
     });
+  }
+
+  @override
+  void initState() {
+    GeolocatorService geolocator = GeolocatorService();
+    geolocator.setStartPosition();
+    super.initState();
   }
 
   @override

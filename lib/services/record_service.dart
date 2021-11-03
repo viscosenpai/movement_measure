@@ -87,11 +87,12 @@ class RecordService extends ChangeNotifier {
   }
 
   Future<void> saveDocument() {
+    print('update record: ${_record}');
     return dataPath
         .doc(_record['docId'])
         .update(_record)
         .then((value) => print('document update'))
-        .catchError((error) => print("Failed to add user: $error"));
+        .catchError((error) => print("Failed to update record: $error"));
   }
 
   Future<void> deleteDocument() {

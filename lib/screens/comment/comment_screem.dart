@@ -35,7 +35,6 @@ class _CommentScreenState extends State<CommentScreen> {
                   setState(() {
                     comment = value;
                   });
-                  print(comment);
                 },
                 style: TextStyle(
                   color: Colors.white,
