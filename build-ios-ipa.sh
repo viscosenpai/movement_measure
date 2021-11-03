@@ -37,4 +37,4 @@ xcodebuild -allowProvisioningUpdates -exportArchive \
 cd ..
 
 # 成果物をコピー
-cp ./build/ios-release/Runner.ipa ${OUTPUT_APK_PATH}/app-release-${TARGET_APP_VERSION}.${TARGET_BUILD_NO}.ipa
+cp ./build/ios-release/movement_measure.ipa ${OUTPUT_APK_PATH}/app-release-${TARGET_APP_VERSION}.${TARGET_BUILD_NO}.ipa
