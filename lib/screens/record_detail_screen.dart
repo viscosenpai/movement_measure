@@ -57,76 +57,96 @@ class RecordDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     final recordService = Provider.of<RecordService>(context);
 
-    return FutureBuilder<DocumentSnapshot>(
-      future: recordService.getRecordDetail(id),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return MessageBox(message: 'Something went wrong');
-        }
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: FutureBuilder<DocumentSnapshot>(
+          future: recordService.getRecordDetail(id),
+          builder:
+              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return MessageBox(message: 'Something went wrong');
+            }
 
-        if (snapshot.hasData && !snapshot.data!.exists) {
-          return MessageBox(message: 'Document does not exist');
-        }
+            if (snapshot.hasData && !snapshot.data!.exists) {
+              return MessageBox(message: 'Document does not exist');
+            }
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Loader();
-        }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Loader();
+            }
 
-        if (snapshot.connectionState == ConnectionState.done) {
-          recordService.initDetail(snapshot);
-          final dateTime = recordService
-              .toDateTimeString(recordService.record['recordDate']);
-
-          return Container(
-            color: Color(0x99000000),
-            margin: EdgeInsets.all(8.0),
-            padding:
-                EdgeInsets.only(top: 8.0, right: 8.0, bottom: 8.0, left: 62.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Text(
-                  '$dateTime',
-                  textAlign: TextAlign.end,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                  ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+            if (snapshot.connectionState == ConnectionState.done) {
+              recordService.initDetail(snapshot);
+              final dateTime = recordService
+                  .toDateTimeString(recordService.record['recordDate']);
+              final splitDate = dateTime.split(' ');
+              return Container(
+                color: Color(0x99000000),
+                margin: EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
                     Text(
-                      '${recordService.record["movementTime"]}',
+                      '${splitDate[0]}',
+                      textAlign: TextAlign.end,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 30.0,
                       ),
                     ),
                     Text(
-                      '${recordService.record["movementDistance"]} m',
+                      '${splitDate[1]}',
+                      textAlign: TextAlign.end,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 30.0,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(
+                          top: 10.0, right: 16.0, bottom: 10.0, left: 16.0),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        border: Border.all(
+                          color: Colors.white,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${recordService.record["movementTime"]}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 35.0,
+                            ),
+                          ),
+                          Text(
+                            '${recordService.record["movementDistance"]} m',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 38.0,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                          _getCommentData(docId: id),
+                        ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 30.0,
-                ),
-                _getCommentData(docId: id),
-              ],
-            ),
-          );
-        }
+              );
+            }
 
-        return Loader();
-      },
+            return Loader();
+          },
+        ),
+      ),
     );
   }
 }
@@ -156,21 +176,21 @@ class _getCommentData extends StatelessWidget {
         }
 
         var comments = recordService.comments.map((comment) {
-          return Column(
-            children: <Widget>[
-              Text(
-                '${comment.comment}',
-                style: TextStyle(
-                  color: Colors.white,
+          return Container(
+            padding: EdgeInsets.only(bottom: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Text(
+                  '${comment.commentTime}',
+                  style: TextStyle(color: Colors.orange[300], fontSize: 20.0),
                 ),
-              ),
-              Text(
-                '${comment.commentTime}',
-                style: TextStyle(
-                  color: Colors.white,
+                Text(
+                  '${comment.comment}',
+                  style: TextStyle(color: Colors.white, fontSize: 20.0),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         }).toList();
 
