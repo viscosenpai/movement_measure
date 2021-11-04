@@ -122,13 +122,15 @@ class RecordDetail extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 35.0,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
                             '${recordService.record["movementDistance"]} m',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 38.0,
+                              fontSize: 40.0,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           SizedBox(
@@ -177,7 +179,12 @@ class _getCommentData extends StatelessWidget {
 
         var comments = recordService.comments.map((comment) {
           return Container(
-            padding: EdgeInsets.only(bottom: 16.0),
+            padding: EdgeInsets.only(top: 16.0, bottom: 18.0),
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(width: 0.5, color: Colors.grey),
+              ),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
