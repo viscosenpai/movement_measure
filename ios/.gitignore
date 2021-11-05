@@ -33,4 +33,5 @@ Runner/GeneratedPluginRegistrant.*
 !default.perspectivev3
 
 GoogleService-Info.plist
-ExportOptions.plist
+ExportOptionsDev.plist
+ExportOptionsProd.plist
