@@ -16,6 +16,7 @@ class CircleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double deviceWidth = MediaQuery.of(context).size.width;
     return ElevatedButton(
       onPressed: () {
         if (onPressed != null) {
@@ -27,7 +28,7 @@ class CircleButton extends StatelessWidget {
         primary: buttonPrimaryColor,
       ),
       child: Container(
-        width: 150.0,
+        width: deviceWidth * 0.4,
         height: 150.0,
         alignment: Alignment.center,
         decoration: const BoxDecoration(

@@ -12,6 +12,7 @@ class IntroductionPages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double deviceHeight = MediaQuery.of(context).size.height;
     List<Map<String, dynamic>> tutorialContents = [
       {
         'imagePath': 'tutorial_1.png',
@@ -33,7 +34,7 @@ class IntroductionPages extends StatelessWidget {
     return IntroductionScreen(
       controlsMargin: EdgeInsets.all(16.0),
       globalBackgroundColor: Color(0x99000000),
-      pages: tutorialPageViews(tutorialContents),
+      pages: tutorialPageViews(tutorialContents, deviceHeight),
       done: Text(
         S.of(context).done,
         style: TextStyle(
@@ -59,10 +60,11 @@ class IntroductionPages extends StatelessWidget {
 }
 
 List<PageViewModel> tutorialPageViews(
-    List<Map<String, dynamic>> tutorialContentList) {
+    List<Map<String, dynamic>> tutorialContentList, double height) {
   return tutorialContentList.map((content) {
     return PageViewModel(
       image: Image(
+        height: height * 0.3,
         image: AssetImage('images/${content["imagePath"]}'),
       ),
       titleWidget: Container(

@@ -45,12 +45,16 @@ class RecordCard extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Wrap(
+                  direction: Axis.horizontal,
+                  alignment: WrapAlignment.spaceBetween,
                   children: [
                     Text(
                       '$time',
-                      style: TextStyle(color: Colors.white, fontSize: 24.0),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24.0,
+                      ),
                     ),
                     Text(
                       '$distance m',

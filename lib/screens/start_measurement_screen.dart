@@ -50,6 +50,7 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double deviceHeight = MediaQuery.of(context).size.height;
     final authService = Provider.of<AuthService>(context);
     final timerStore = Provider.of<TimerStore>(context);
     final recordService = Provider.of<RecordService>(context);
@@ -110,7 +111,7 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                   style: kMeasurementScreenTextStyle,
                 ),
                 SizedBox(
-                  height: 240,
+                  height: deviceHeight * 0.32,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
