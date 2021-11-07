@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:movement_measure/services/geolocator.dart';
+import 'package:movement_measure/utilities/constants.dart';
 
 enum ActivityStatus {
   stop,
@@ -67,10 +68,12 @@ extension SaveExtension on SaveStatus {
 }
 
 class TimerStore with ChangeNotifier {
-  // TODO: ユーザーが設定できるように
   var count = 0;
   final sec = const Duration(seconds: 1);
-  int _addDistanceCount = 5;
+
+  // TODO: ユーザーが設定できるように
+  int _addDistanceCount = kDefaultAddDistanceCount;
+
   late Timer _timer;
   DateTime _time = DateTime.utc(0, 0, 0);
 
@@ -116,7 +119,7 @@ class TimerStore with ChangeNotifier {
     _activityStatus = ActivityStatus.stop;
     _saveStatus = SaveStatus.stop;
     _time = DateTime.utc(0, 0, 0);
-    _addDistanceCount = 5;
+    _addDistanceCount = kDefaultAddDistanceCount;
     addDistance = 0;
     totalDistance = 0;
     geolocator.setStartPosition();
@@ -126,7 +129,7 @@ class TimerStore with ChangeNotifier {
   void resetAddDistanceCount() {
     if (_addDistanceCount == 0) {
       setDistance();
-      _addDistanceCount = 5;
+      _addDistanceCount = kDefaultAddDistanceCount;
     }
     _addDistanceCount--;
     notifyListeners();

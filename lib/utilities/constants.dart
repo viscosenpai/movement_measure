@@ -22,6 +22,7 @@ const kMeasurementScreenTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+int kDefaultAddDistanceCount = 10;
 String kDefaultMovementTime = DateFormat.Hms().format(DateTime.utc(0, 0, 0));
 
 PageRouteBuilder<dynamic> kPpageRouteBuilder(Widget widget) {
