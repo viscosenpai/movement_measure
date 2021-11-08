@@ -27,8 +27,8 @@ flutter pub get
 #   --build-name=${TARGET_APP_VERSION} --build-number=${TARGET_BUILD_NO}
 
 flutter build ipa --release \
-  --build-name=${TARGET_APP_VERSION} --build-number=${TARGET_BUILD_NO}
-  --export-options-plist="ios/ExportOptionsProd.plist"
+  --build-name=${TARGET_APP_VERSION} --build-number=${TARGET_BUILD_NO} \
+  --export-options-plist="./ios/ExportOptionsProd.plist"
 
 # cd ios
 

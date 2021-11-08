@@ -21,7 +21,6 @@ class AuthService with ChangeNotifier {
   Future<void> signInAnonymously() async {
     try {
       _status = Status.authenticating;
-      notifyListeners();
       await _auth.signInAnonymously();
       _status = Status.authenticated;
       notifyListeners();
