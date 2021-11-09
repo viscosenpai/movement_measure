@@ -50,11 +50,51 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `Version Update Information`
+  String get updaterTitle {
+    return Intl.message(
+      'Version Update Information',
+      name: 'updaterTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A new version of the app is available. Please get the updated version from the store and use it.`
+  String get updaterContent {
+    return Intl.message(
+      'A new version of the app is available. Please get the updated version from the store and use it.',
+      name: 'updaterContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update now`
+  String get updaterButtonLabel {
+    return Intl.message(
+      'Update now',
+      name: 'updaterButtonLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Comment`
   String get comment {
     return Intl.message(
       'Comment',
       name: 'comment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can only add comments during the measurement.`
+  String get commentValidMessage {
+    return Intl.message(
+      'You can only add comments during the measurement.',
+      name: 'commentValidMessage',
       desc: '',
       args: [],
     );

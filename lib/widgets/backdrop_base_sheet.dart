@@ -1,5 +1,5 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:movement_measure/utilities/constants.dart';
 
 class BackdropBaseSheet extends StatelessWidget {
   BackdropBaseSheet({
@@ -16,13 +16,10 @@ class BackdropBaseSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0),
+      filter: kDefaultBlur,
       child: Container(
         child: Scaffold(
-          backgroundColor: Color(0x99000000),
           appBar: AppBar(
-            backgroundColor: Colors.black54,
-            elevation: 0,
             leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);

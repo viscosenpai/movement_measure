@@ -25,6 +25,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("MovementMeasureについて"),
         "add": MessageLookupByLibrary.simpleMessage("追加"),
         "comment": MessageLookupByLibrary.simpleMessage("コメント"),
+        "commentValidMessage":
+            MessageLookupByLibrary.simpleMessage("コメントを投稿できるのは計測中のみとなります。"),
         "detail": MessageLookupByLibrary.simpleMessage("記録"),
         "done": MessageLookupByLibrary.simpleMessage("完了"),
         "history": MessageLookupByLibrary.simpleMessage("履歴"),
@@ -39,6 +41,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "howToUseTitle2": MessageLookupByLibrary.simpleMessage("思い出を残そう"),
         "howToUseTitle3": MessageLookupByLibrary.simpleMessage("毎日の道のりを振り返ろう"),
         "settings": MessageLookupByLibrary.simpleMessage("設定"),
+        "updaterButtonLabel": MessageLookupByLibrary.simpleMessage("今すぐ更新"),
+        "updaterContent": MessageLookupByLibrary.simpleMessage(
+            "新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい。"),
+        "updaterTitle": MessageLookupByLibrary.simpleMessage("バージョン更新のお知らせ"),
         "version": MessageLookupByLibrary.simpleMessage("バージョン情報")
       };
 }

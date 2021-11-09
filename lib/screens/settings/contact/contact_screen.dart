@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/screens/settings/settings_screen.dart';
@@ -9,12 +8,9 @@ class ContactScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0),
+      filter: kDefaultBlur,
       child: Scaffold(
-        backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: Colors.black54,
-          elevation: 0,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);

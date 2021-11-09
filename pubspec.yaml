@@ -1,7 +1,7 @@
 name: movement_measure
 description: A new Flutter project.
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -41,10 +41,9 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: 'lib/assets/icon.png'
+  image_path: "images/icon.png"
 
 flutter:
-
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:

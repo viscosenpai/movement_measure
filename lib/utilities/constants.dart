@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,7 @@ const kMeasurementScreenTextStyle = TextStyle(
 
 int kDefaultAddDistanceCount = 10;
 String kDefaultMovementTime = DateFormat.Hms().format(DateTime.utc(0, 0, 0));
+ImageFilter kDefaultBlur = ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0);
 
 PageRouteBuilder<dynamic> kPpageRouteBuilder(Widget widget) {
   return PageRouteBuilder(

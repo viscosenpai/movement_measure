@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:movement_measure/generated/l10n.dart';
 import 'package:movement_measure/services/version_check_service.dart';
 
 class Updater extends StatefulWidget {
@@ -55,17 +56,21 @@ class _UpdaterState extends State<Updater> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        final title = "バージョン更新のお知らせ";
-        final message = "新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい。";
-        final btnLabel = "今すぐ更新";
+        final title = S.of(context).updaterTitle;
+        final message = S.of(context).updaterContent;
+        final buttonLabel = S.of(context).updaterButtonLabel;
         return new AlertDialog(
+          backgroundColor: Colors.black54,
+          shape: RoundedRectangleBorder(side: BorderSide(color: Colors.white)),
+          titleTextStyle: TextStyle(color: Colors.white),
+          contentTextStyle: TextStyle(color: Colors.white),
           title: Text(title),
           content: Text(message),
           actions: <Widget>[
             TextButton(
               child: Text(
-                btnLabel,
-                style: TextStyle(color: Colors.red),
+                buttonLabel,
+                style: TextStyle(color: Colors.orange),
               ),
               onPressed: () =>
                   _launchURL(Platform.isIOS ? APP_STORE_URL : PLAY_STORE_URL),

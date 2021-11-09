@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movement_measure/utilities/constants.dart';
-import 'package:movement_measure/screens/record_detail_screen.dart';
+import 'package:movement_measure/screens/records/record_detail_screen.dart';
 
 class RecordCard extends StatelessWidget {
   const RecordCard({

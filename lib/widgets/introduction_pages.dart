@@ -33,7 +33,7 @@ class IntroductionPages extends StatelessWidget {
 
     return IntroductionScreen(
       controlsMargin: EdgeInsets.all(16.0),
-      globalBackgroundColor: Color(0x99000000),
+      globalBackgroundColor: Colors.black,
       pages: tutorialPageViews(tutorialContents, deviceHeight),
       done: Text(
         S.of(context).done,
@@ -73,7 +73,7 @@ List<PageViewModel> tutorialPageViews(
         child: Text(
           content['title'].toString(),
           style: TextStyle(
-            fontSize: 24.0,
+            fontSize: 22.0,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -91,7 +91,7 @@ List<PageViewModel> tutorialPageViews(
               content['body'].toString(),
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 24.0,
+                fontSize: 20.0,
                 fontWeight: FontWeight.bold,
               ),
             ),

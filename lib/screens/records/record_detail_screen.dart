@@ -1,10 +1,9 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:movement_measure/generated/l10n.dart';
 import 'package:movement_measure/services/record_service.dart';
-import 'package:movement_measure/screens/record_list_screen.dart';
+import 'package:movement_measure/screens/records/record_list_screen.dart';
 import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/widgets/message_box.dart';
 import 'package:movement_measure/widgets/loader.dart';
@@ -20,12 +19,10 @@ class RecordDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0),
+      filter: kDefaultBlur,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: Colors.black54,
-          elevation: 0,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);

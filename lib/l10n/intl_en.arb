@@ -1,5 +1,9 @@
 {
+  "updaterTitle": "Version Update Information",
+  "updaterContent": "A new version of the app is available. Please get the updated version from the store and use it.",
+  "updaterButtonLabel": "Update now",
   "comment": "Comment",
+  "commentValidMessage": "You can only add comments during the measurement.",
   "add": "add",
   "history": "History",
   "detail": "Detail",
