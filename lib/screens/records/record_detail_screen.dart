@@ -5,6 +5,7 @@ import 'package:movement_measure/generated/l10n.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/screens/records/record_list_screen.dart';
 import 'package:movement_measure/utilities/constants.dart';
+import 'package:movement_measure/widgets/comment_card.dart';
 import 'package:movement_measure/widgets/message_box.dart';
 import 'package:movement_measure/widgets/loader.dart';
 
@@ -86,7 +87,7 @@ class RecordDetail extends StatelessWidget {
                     Text(
                       '${splitDate[0]}',
                       textAlign: TextAlign.end,
-                      style: TextStyle(fontSize: 30.0),
+                      style: TextStyle(fontSize: 20.0),
                     ),
                     Text(
                       '${splitDate[1]}',
@@ -97,8 +98,8 @@ class RecordDetail extends StatelessWidget {
                       height: 10.0,
                     ),
                     Container(
-                      padding: EdgeInsets.only(
-                          top: 10.0, right: 16.0, bottom: 10.0, left: 16.0),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 16.0),
                       decoration: BoxDecoration(
                         color: Colors.black,
                         border: Border.all(
@@ -111,7 +112,7 @@ class RecordDetail extends StatelessWidget {
                           Text(
                             '${recordService.record["movementTime"]}',
                             style: TextStyle(
-                              fontSize: 35.0,
+                              fontSize: 40.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -125,7 +126,7 @@ class RecordDetail extends StatelessWidget {
                           SizedBox(
                             height: 30.0,
                           ),
-                          _getCommentData(docId: id),
+                          GetCommentDataStream(docId: id),
                         ],
                       ),
                     ),
@@ -142,8 +143,8 @@ class RecordDetail extends StatelessWidget {
   }
 }
 
-class _getCommentData extends StatelessWidget {
-  _getCommentData({Key? key, required this.docId}) : super(key: key);
+class GetCommentDataStream extends StatelessWidget {
+  GetCommentDataStream({Key? key, required this.docId}) : super(key: key);
 
   final String docId;
 
@@ -166,32 +167,12 @@ class _getCommentData extends StatelessWidget {
           recordService.initComment(snapshot.data!.docs);
         }
 
-        var comments = recordService.comments.map((comment) {
-          return Container(
-            padding: EdgeInsets.only(top: 16.0, bottom: 18.0),
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(width: 0.5, color: Colors.grey),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Text(
-                  '${comment.commentTime}',
-                  style: TextStyle(color: Colors.orange[300], fontSize: 20.0),
-                ),
-                Text(
-                  '${comment.comment}',
-                  style: TextStyle(fontSize: 20.0),
-                ),
-              ],
-            ),
-          );
+        var commentCards = recordService.comments.map((comment) {
+          return CommentCard(comment: comment);
         }).toList();
 
         return Column(
-          children: comments,
+          children: commentCards,
         );
       },
     );

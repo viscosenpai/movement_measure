@@ -17,19 +17,14 @@ class RecordListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BackdropBaseSheet(
       sheetTitle: S.of(context).history,
-      bodyComponent: getRecordData(),
+      bodyComponent: GetRecordDataStream(),
     );
   }
 }
 
-class getRecordData extends StatefulWidget {
-  const getRecordData({Key? key}) : super(key: key);
+class GetRecordDataStream extends StatelessWidget {
+  const GetRecordDataStream({Key? key}) : super(key: key);
 
-  @override
-  _getRecordDataState createState() => _getRecordDataState();
-}
-
-class _getRecordDataState extends State<getRecordData> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
