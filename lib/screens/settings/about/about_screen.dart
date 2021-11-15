@@ -3,7 +3,7 @@ import 'package:movement_measure/generated/l10n.dart';
 import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/screens/settings/settings_screen.dart';
 import 'package:movement_measure/screens/settings/about/how_to_use_screen.dart';
-import 'package:movement_measure/widgets/settingsMenuItem.dart';
+import 'package:movement_measure/widgets/settings_menu_item.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key? key}) : super(key: key);

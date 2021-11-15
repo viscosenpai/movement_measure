@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:movement_measure/generated/l10n.dart';
-import 'package:movement_measure/services/timer.dart';
+import 'package:movement_measure/services/timer_service.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/widgets/backdrop_base_sheet.dart';
 
@@ -18,7 +18,7 @@ class _CommentScreenState extends State<CommentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final timerStore = Provider.of<TimerStore>(context);
+    final timerStore = Provider.of<TimerService>(context);
     final recordService = Provider.of<RecordService>(context);
 
     return BackdropBaseSheet(

@@ -6,10 +6,10 @@ import 'package:movement_measure/utilities/constants.dart';
 import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/services/ad_state.dart';
 import 'package:movement_measure/services/record_service.dart';
-import 'package:movement_measure/services/timer.dart';
-import 'package:movement_measure/services/geolocator.dart';
+import 'package:movement_measure/services/timer_service.dart';
+import 'package:movement_measure/services/geolocator_service.dart';
 import 'package:movement_measure/widgets/circle_button.dart';
-import 'package:movement_measure/widgets/navigationButtonArea.dart';
+import 'package:movement_measure/widgets/navigation_button_area.dart';
 
 class StartMeasurementScreen extends StatefulWidget {
   const StartMeasurementScreen({Key? key}) : super(key: key);
@@ -50,7 +50,7 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
   Widget build(BuildContext context) {
     final double deviceHeight = MediaQuery.of(context).size.height;
     final authService = Provider.of<AuthService>(context);
-    final timerStore = Provider.of<TimerStore>(context);
+    final timerStore = Provider.of<TimerService>(context);
     final recordService = Provider.of<RecordService>(context);
     String userId = authService.user.uid;
     recordService.uid = userId;

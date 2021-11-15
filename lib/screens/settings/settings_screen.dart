@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movement_measure/generated/l10n.dart';
 import 'package:movement_measure/screens/settings/about/about_screen.dart';
 import 'package:movement_measure/widgets/backdrop_base_sheet.dart';
-import 'package:movement_measure/widgets/settingsMenuItem.dart';
+import 'package:movement_measure/widgets/settings_menu_item.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);

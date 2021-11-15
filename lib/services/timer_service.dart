@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:movement_measure/services/geolocator.dart';
+import 'package:movement_measure/services/geolocator_service.dart';
 import 'package:movement_measure/utilities/constants.dart';
 
 enum ActivityStatus {
@@ -67,7 +67,7 @@ extension SaveExtension on SaveStatus {
   Color? get circleButtonTextColor => circleButtonTextColors[this];
 }
 
-class TimerStore with ChangeNotifier {
+class TimerService with ChangeNotifier {
   var count = 0;
   final sec = const Duration(seconds: 1);
 

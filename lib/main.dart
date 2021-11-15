@@ -6,7 +6,7 @@ import 'package:movement_measure/app.dart';
 import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/services/ad_state.dart';
 import 'package:movement_measure/services/version_check_service.dart';
-import 'package:movement_measure/services/timer.dart';
+import 'package:movement_measure/services/timer_service.dart';
 import 'package:movement_measure/services/record_service.dart';
 
 void main() async {
@@ -19,7 +19,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => AuthService.instance()),
       ChangeNotifierProvider(create: (_) => AdState(initFuture)),
       ChangeNotifierProvider(create: (_) => checker),
-      ChangeNotifierProvider(create: (_) => TimerStore()),
+      ChangeNotifierProvider(create: (_) => TimerService()),
       ChangeNotifierProvider(create: (_) => RecordService()),
     ],
     child: App(),
