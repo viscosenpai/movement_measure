@@ -9,7 +9,7 @@ class AdState with ChangeNotifier {
   AdState(this.initialization);
 
   String get bannerAdUnitId =>
-      Platform.isAndroid ? androidAdUnitId : iosAdUnitId;
+      Platform.isAndroid ? kAndroidAdUnitId : kIosAdUnitId;
 
   BannerAd initBannerAd() {
     return BannerAd(

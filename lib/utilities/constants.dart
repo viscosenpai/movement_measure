@@ -10,10 +10,11 @@ final configName = bool.fromEnvironment('dart.vm.product')
     ? CONFIG_VERSION
     : DEV_VERSION_CONFIG;
 
-final androidAdUnitId = bool.fromEnvironment('dart.vm.product')
+// BannerAdsID
+final kAndroidAdUnitId = bool.fromEnvironment('dart.vm.product')
     ? "ca-app-pub-8516003834400073/5201328040"
     : "ca-app-pub-3940256099942544/6300978111";
-final iosAdUnitId = bool.fromEnvironment('dart.vm.product')
+final kIosAdUnitId = bool.fromEnvironment('dart.vm.product')
     ? "ca-app-pub-8516003834400073/7655513295"
     : "ca-app-pub-3940256099942544/2934735716";
 
@@ -23,10 +24,14 @@ const kMeasurementScreenTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+// Timer周り定数
 int kDefaultAddDistanceCount = 10;
 String kDefaultMovementTime = DateFormat.Hms().format(DateTime.utc(0, 0, 0));
+
+// 透過背景定数
 ImageFilter kDefaultBlur = ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0);
 
+// ページ遷移アニメーション関数
 PageRouteBuilder<dynamic> kPpageRouteBuilder(Widget widget) {
   return PageRouteBuilder(
     opaque: false,
