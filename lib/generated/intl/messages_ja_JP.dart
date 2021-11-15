@@ -27,7 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "add": MessageLookupByLibrary.simpleMessage("追加"),
         "comment": MessageLookupByLibrary.simpleMessage("コメント"),
         "commentValidMessage":
-            MessageLookupByLibrary.simpleMessage("コメントを投稿できるのは計測中のみとなります。"),
+            MessageLookupByLibrary.simpleMessage("コメントを入力してください。"),
         "detail": MessageLookupByLibrary.simpleMessage("記録"),
         "done": MessageLookupByLibrary.simpleMessage("完了"),
         "history": MessageLookupByLibrary.simpleMessage("履歴"),
@@ -41,6 +41,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "howToUseTitle1": MessageLookupByLibrary.simpleMessage("あなたの道のりを記録しよう"),
         "howToUseTitle2": MessageLookupByLibrary.simpleMessage("思い出を残そう"),
         "howToUseTitle3": MessageLookupByLibrary.simpleMessage("毎日の道のりを振り返ろう"),
+        "measureValidMessage":
+            MessageLookupByLibrary.simpleMessage("コメントを投稿できるのは計測中のみとなります。"),
         "settings": MessageLookupByLibrary.simpleMessage("設定"),
         "updaterButtonLabel": MessageLookupByLibrary.simpleMessage("今すぐ更新"),
         "updaterContent": MessageLookupByLibrary.simpleMessage(

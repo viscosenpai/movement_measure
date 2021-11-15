@@ -26,8 +26,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("About MovementMeasure"),
         "add": MessageLookupByLibrary.simpleMessage("add"),
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
-        "commentValidMessage": MessageLookupByLibrary.simpleMessage(
-            "You can only add comments during the measurement."),
+        "commentValidMessage":
+            MessageLookupByLibrary.simpleMessage("Please enter a comment."),
         "detail": MessageLookupByLibrary.simpleMessage("Detail"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
         "history": MessageLookupByLibrary.simpleMessage("History"),
@@ -44,6 +44,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Let\'s leave some memories."),
         "howToUseTitle3": MessageLookupByLibrary.simpleMessage(
             "Let\'s look back on our daily journey."),
+        "measureValidMessage": MessageLookupByLibrary.simpleMessage(
+            "You can only add comments during the measurement."),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "updaterButtonLabel":
             MessageLookupByLibrary.simpleMessage("Update now"),

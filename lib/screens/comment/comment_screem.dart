@@ -53,40 +53,19 @@ class _CommentScreenState extends State<CommentScreen> {
       actions: [
         TextButton(
           onPressed: () {
-            if (comment.length != 0 &&
-                timerStore.activityStatus != ActivityStatus.stop &&
-                timerStore.saveStatus != SaveStatus.save) {
+            if (timerStore.activityStatus == ActivityStatus.stop ||
+                timerStore.saveStatus == SaveStatus.save) {
+              showCommentValidationDialog(
+                  context, S.of(context).measureValidMessage);
+            } else if (comment.length == 0) {
+              showCommentValidationDialog(
+                  context, S.of(context).commentValidMessage);
+            } else {
               recordService.addComment(recordService.docId, {
                 'comment': comment,
                 'commentTime': DateFormat.Hms().format(timerStore.time),
               });
               Navigator.pop(context);
-            } else {
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (BuildContext context) {
-                  final message = S.of(context).commentValidMessage;
-                  final btnLabel = "OK";
-                  return new AlertDialog(
-                    backgroundColor: Colors.black54,
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.white)),
-                    contentTextStyle:
-                        TextStyle(color: Colors.white, fontSize: 18.0),
-                    content: Text(message),
-                    actions: <Widget>[
-                      TextButton(
-                        child: Text(
-                          btnLabel,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () => {Navigator.pop(context)},
-                      ),
-                    ],
-                  );
-                },
-              );
             }
           },
           child: Text(
@@ -98,6 +77,34 @@ class _CommentScreenState extends State<CommentScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Future<dynamic> showCommentValidationDialog(
+      BuildContext context, String contentMessage) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        // final message = S.of(context).commentValidMessage;
+        final message = contentMessage;
+        final btnLabel = "OK";
+        return new AlertDialog(
+          backgroundColor: Colors.black54,
+          shape: RoundedRectangleBorder(side: BorderSide(color: Colors.white)),
+          contentTextStyle: TextStyle(color: Colors.white, fontSize: 18.0),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                btnLabel,
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () => {Navigator.pop(context)},
+            ),
+          ],
+        );
+      },
     );
   }
 }

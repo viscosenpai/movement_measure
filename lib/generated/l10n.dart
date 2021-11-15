@@ -90,11 +90,21 @@ class S {
     );
   }
 
-  /// `You can only add comments during the measurement.`
+  /// `Please enter a comment.`
   String get commentValidMessage {
     return Intl.message(
-      'You can only add comments during the measurement.',
+      'Please enter a comment.',
       name: 'commentValidMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can only add comments during the measurement.`
+  String get measureValidMessage {
+    return Intl.message(
+      'You can only add comments during the measurement.',
+      name: 'measureValidMessage',
       desc: '',
       args: [],
     );
