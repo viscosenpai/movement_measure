@@ -8,10 +8,8 @@ import 'package:movement_measure/services/ad_state.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/services/timer.dart';
 import 'package:movement_measure/services/geolocator.dart';
-import 'package:movement_measure/screens/settings/settings_screen.dart';
-import 'package:movement_measure/screens/records/record_list_screen.dart';
-import 'package:movement_measure/screens/comment/comment_screem.dart';
 import 'package:movement_measure/widgets/circle_button.dart';
+import 'package:movement_measure/widgets/navigationButtonArea.dart';
 
 class StartMeasurementScreen extends StatefulWidget {
   const StartMeasurementScreen({Key? key}) : super(key: key);
@@ -82,13 +80,6 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
       }
     }
 
-    void pushedSubPage(Widget subPage) {
-      Navigator.push(
-        context,
-        kPpageRouteBuilder(subPage),
-      );
-    }
-
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
@@ -134,46 +125,7 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                     ],
                   ),
                 ),
-                Container(
-                  width: 300,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 30.0,
-                    vertical: 10.0,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40.0),
-                    border: Border.all(color: Colors.grey, width: 1.0),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      IconButton(
-                        onPressed: () {
-                          pushedSubPage(CommentScreen());
-                        },
-                        iconSize: 40.0,
-                        color: Colors.white,
-                        icon: Icon(Icons.textsms_outlined),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          pushedSubPage(RecordListScreen());
-                        },
-                        iconSize: 42.0,
-                        color: Colors.white,
-                        icon: Icon(Icons.history),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          pushedSubPage(SettingsScreen());
-                        },
-                        iconSize: 42.0,
-                        color: Colors.white,
-                        icon: Icon(Icons.settings_outlined),
-                      ),
-                    ],
-                  ),
-                ),
+                NavigationButtonArea(),
                 if (isLoadedBannerAd)
                   Container(
                     height: 50,
