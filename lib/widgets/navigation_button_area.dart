@@ -36,7 +36,6 @@ class NavigationButtonArea extends StatelessWidget {
               pushedSubPage(CommentScreen());
             },
             iconSize: 40.0,
-            color: Colors.white,
             icon: Icon(Icons.textsms_outlined),
           ),
           IconButton(
@@ -44,7 +43,6 @@ class NavigationButtonArea extends StatelessWidget {
               pushedSubPage(RecordListScreen());
             },
             iconSize: 42.0,
-            color: Colors.white,
             icon: Icon(Icons.history),
           ),
           IconButton(
@@ -52,7 +50,6 @@ class NavigationButtonArea extends StatelessWidget {
               pushedSubPage(SettingsScreen());
             },
             iconSize: 42.0,
-            color: Colors.white,
             icon: Icon(Icons.settings_outlined),
           ),
         ],

@@ -36,7 +36,6 @@ class _CommentScreenState extends State<CommentScreen> {
                   });
                 },
                 style: TextStyle(
-                  color: Colors.white,
                   fontSize: 16.0,
                 ),
                 cursorColor: Colors.white,
@@ -86,13 +85,12 @@ class _CommentScreenState extends State<CommentScreen> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        // final message = S.of(context).commentValidMessage;
         final message = contentMessage;
         final btnLabel = "OK";
         return new AlertDialog(
           backgroundColor: Colors.black54,
           shape: RoundedRectangleBorder(side: BorderSide(color: Colors.white)),
-          contentTextStyle: TextStyle(color: Colors.white, fontSize: 18.0),
+          contentTextStyle: TextStyle(fontSize: 18.0),
           content: Text(message),
           actions: <Widget>[
             TextButton(

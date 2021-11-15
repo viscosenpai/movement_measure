@@ -57,7 +57,6 @@ class SettingsMenuList extends StatelessWidget {
         return SettingsMenuItem(
           menuTitle: titleList[index],
           menuIcon: iconList[index],
-          ispushed: true,
           pushedScreen: pushedScreenList[index],
         );
       },

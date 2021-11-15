@@ -91,7 +91,6 @@ List<PageViewModel> tutorialPageViews(
             child: Text(
               content['body'].toString(),
               style: TextStyle(
-                color: Colors.white,
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
               ),

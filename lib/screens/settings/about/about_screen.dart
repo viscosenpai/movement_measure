@@ -70,8 +70,8 @@ class AboutMenuList extends StatelessWidget {
         return SettingsMenuItem(
           menuTitle: titleList[index],
           menuIcon: iconList[index],
-          ispushed: isPushedList[index],
           pushedScreen: pushedScreenList[index],
+          ispushed: isPushedList[index],
         );
       },
     );

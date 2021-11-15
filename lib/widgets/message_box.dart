@@ -22,7 +22,6 @@ class MessageBox extends StatelessWidget {
           child: Text(
             message,
             style: TextStyle(
-              color: Colors.white,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
             ),

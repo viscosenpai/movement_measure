@@ -18,12 +18,6 @@ final kIosAdUnitId = bool.fromEnvironment('dart.vm.product')
     ? "ca-app-pub-8516003834400073/7655513295"
     : "ca-app-pub-3940256099942544/2934735716";
 
-const kMeasurementScreenTextStyle = TextStyle(
-  color: Colors.white,
-  fontSize: 60.0,
-  fontWeight: FontWeight.bold,
-);
-
 // Timer周り定数
 int kDefaultAddDistanceCount = 10;
 String kDefaultMovementTime = DateFormat.Hms().format(DateTime.utc(0, 0, 0));

@@ -34,10 +34,13 @@ class App extends StatelessWidget {
         scaffoldBackgroundColor: Color(0x99000000),
         textTheme: GoogleFonts.jetBrainsMonoTextTheme(
           Theme.of(context).textTheme.copyWith(
+                subtitle1: TextStyle(color: Colors.white),
+                subtitle2: TextStyle(color: Colors.white),
                 bodyText1: TextStyle(color: Colors.white),
                 bodyText2: TextStyle(color: Colors.white),
               ),
         ),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       home: SignProcess(),
     );

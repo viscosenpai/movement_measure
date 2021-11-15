@@ -86,18 +86,12 @@ class RecordDetail extends StatelessWidget {
                     Text(
                       '${splitDate[0]}',
                       textAlign: TextAlign.end,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30.0,
-                      ),
+                      style: TextStyle(fontSize: 30.0),
                     ),
                     Text(
                       '${splitDate[1]}',
                       textAlign: TextAlign.end,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                      ),
+                      style: TextStyle(fontSize: 20.0),
                     ),
                     SizedBox(
                       height: 10.0,
@@ -117,7 +111,6 @@ class RecordDetail extends StatelessWidget {
                           Text(
                             '${recordService.record["movementTime"]}',
                             style: TextStyle(
-                              color: Colors.white,
                               fontSize: 35.0,
                               fontWeight: FontWeight.bold,
                             ),
@@ -125,7 +118,6 @@ class RecordDetail extends StatelessWidget {
                           Text(
                             '${recordService.record["movementDistance"]} m',
                             style: TextStyle(
-                              color: Colors.white,
                               fontSize: 40.0,
                               fontWeight: FontWeight.bold,
                             ),
@@ -191,7 +183,7 @@ class _getCommentData extends StatelessWidget {
                 ),
                 Text(
                   '${comment.comment}',
-                  style: TextStyle(color: Colors.white, fontSize: 20.0),
+                  style: TextStyle(fontSize: 20.0),
                 ),
               ],
             ),

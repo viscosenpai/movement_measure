@@ -6,8 +6,8 @@ class SettingsMenuItem extends StatelessWidget {
     Key? key,
     required this.menuTitle,
     required this.menuIcon,
-    required this.ispushed,
     required this.pushedScreen,
+    this.ispushed = true,
   }) : super(key: key);
 
   final String menuTitle;
@@ -39,20 +39,18 @@ class versionMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(menuIcon, color: Colors.white, size: 30.0),
+      leading: Icon(
+        menuIcon,
+        color: Colors.white,
+        size: 30.0,
+      ),
       title: Text(
         menuTitle,
         style: TextStyle(
-          color: Colors.white,
           fontSize: 20.0,
         ),
       ),
-      trailing: Text(
-        "1.0.0",
-        style: TextStyle(
-          color: Colors.white,
-        ),
-      ),
+      trailing: Text("1.0.0"),
     );
   }
 }
@@ -80,16 +78,20 @@ class pushedMenu extends StatelessWidget {
         );
       },
       child: ListTile(
-        leading: Icon(menuIcon, color: Colors.white, size: 30.0),
+        leading: Icon(
+          menuIcon,
+          color: Colors.white,
+          size: 30.0,
+        ),
         title: Text(
           menuTitle,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20.0,
-          ),
+          style: TextStyle(fontSize: 20.0),
         ),
-        trailing:
-            Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+        trailing: Icon(
+          Icons.keyboard_arrow_right,
+          color: Colors.white,
+          size: 30.0,
+        ),
       ),
     );
   }

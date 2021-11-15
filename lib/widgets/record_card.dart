@@ -39,37 +39,25 @@ class RecordCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Text(
-                  '$dateTime',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
+                Text('$dateTime'),
                 Wrap(
                   direction: Axis.horizontal,
                   alignment: WrapAlignment.spaceBetween,
                   children: [
                     Text(
                       '$time',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24.0,
-                      ),
+                      style: TextStyle(fontSize: 24.0),
                     ),
                     Text(
                       '$distance m',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24.0,
-                      ),
+                      style: TextStyle(fontSize: 24.0),
                     ),
                   ],
                 ),
               ],
             ),
           ),
-          trailing:
-              Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+          trailing: Icon(Icons.keyboard_arrow_right, size: 30.0),
         ),
       ),
     );

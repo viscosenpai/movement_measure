@@ -95,11 +95,17 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                 ),
                 Text(
                   '${timerStore.totalDistance} m',
-                  style: kMeasurementScreenTextStyle,
+                  style: TextStyle(
+                    fontSize: 60.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   DateFormat.Hms().format(timerStore.time),
-                  style: kMeasurementScreenTextStyle,
+                  style: TextStyle(
+                    fontSize: 60.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 SizedBox(
                   height: deviceHeight * 0.32,
