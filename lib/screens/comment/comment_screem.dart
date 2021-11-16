@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:movement_measure/generated/l10n.dart';
-import 'package:movement_measure/utilities/date_time_formatter.dart';
 import 'package:movement_measure/services/timer_service.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/widgets/backdrop_base_sheet.dart';
@@ -18,9 +17,8 @@ class _CommentScreenState extends State<CommentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final timerStore = Provider.of<TimerService>(context);
+    final timerService = Provider.of<TimerService>(context);
     final recordService = Provider.of<RecordService>(context);
-    final datetimeFormatter = DateTimeFormatter();
 
     return BackdropBaseSheet(
       sheetTitle: S.of(context).comment,
@@ -53,8 +51,8 @@ class _CommentScreenState extends State<CommentScreen> {
       actions: [
         TextButton(
           onPressed: () {
-            if (timerStore.activityStatus == ActivityStatus.start ||
-                timerStore.saveStatus == SaveStatus.save) {
+            if (timerService.activityStatus == ActivityStatus.start ||
+                timerService.saveStatus == SaveStatus.save) {
               showCommentValidationDialog(
                   context, S.of(context).measureValidMessage);
             } else if (comment.length == 0) {
@@ -63,7 +61,7 @@ class _CommentScreenState extends State<CommentScreen> {
             } else {
               recordService.addComment(recordService.docId, {
                 'comment': comment,
-                'commentTime': datetimeFormatter.toClockTime(timerStore.time),
+                'commentTime': timerService.time,
               });
               Navigator.pop(context);
             }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
-import 'package:movement_measure/utilities/date_time_formatter.dart';
 import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/services/ad_state.dart';
 import 'package:movement_measure/services/record_service.dart';
@@ -49,34 +48,33 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
   Widget build(BuildContext context) {
     final double deviceHeight = MediaQuery.of(context).size.height;
     final authService = Provider.of<AuthService>(context);
-    final timerStore = Provider.of<TimerService>(context);
+    final timerService = Provider.of<TimerService>(context);
     final recordService = Provider.of<RecordService>(context);
-    final datetimeFormatter = DateTimeFormatter();
     String userId = authService.user.uid;
     recordService.uid = userId;
 
     void countingTimer() {
-      if (timerStore.activityStatus == ActivityStatus.start ||
-          timerStore.activityStatus == ActivityStatus.restart) {
+      if (timerService.activityStatus == ActivityStatus.start ||
+          timerService.activityStatus == ActivityStatus.restart) {
         recordService.initDocument(userId);
-        timerStore.startTimer();
-      } else if (timerStore.activityStatus == ActivityStatus.pause) {
-        timerStore.pauseTimer();
-      } else if (timerStore.activityStatus == ActivityStatus.clear) {
+        timerService.startTimer();
+      } else if (timerService.activityStatus == ActivityStatus.pause) {
+        timerService.pauseTimer();
+      } else if (timerService.activityStatus == ActivityStatus.clear) {
         recordService.deleteDocument();
-        timerStore.clearTimer();
+        timerService.clearTimer();
       }
     }
 
     void countingStop() {
-      if (timerStore.saveStatus == SaveStatus.stop &&
-          timerStore.activityStatus != ActivityStatus.start) {
-        timerStore.stopTimer();
-      } else if (timerStore.saveStatus == SaveStatus.save) {
+      if (timerService.saveStatus == SaveStatus.stop &&
+          timerService.activityStatus != ActivityStatus.start) {
+        timerService.stopTimer();
+      } else if (timerService.saveStatus == SaveStatus.save) {
         recordService.setDocument(
-            userId, timerStore.totalDistance, timerStore.time);
+            userId, timerService.totalDistance, timerService.time);
         recordService.saveDocument();
-        timerStore.clearTimer();
+        timerService.clearTimer();
       }
     }
 
@@ -94,14 +92,14 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                   height: 30.0,
                 ),
                 Text(
-                  '${timerStore.totalDistance} m',
+                  '${timerService.totalDistance} m',
                   style: TextStyle(
                     fontSize: 60.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  datetimeFormatter.toClockTime(timerStore.time),
+                  timerService.time,
                   style: TextStyle(
                     fontSize: 60.0,
                     fontWeight: FontWeight.bold,
@@ -113,18 +111,18 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CircleButton(
-                        label: timerStore.activityStatus.circleButtonLabel!,
+                        label: timerService.activityStatus.circleButtonLabel!,
                         buttonPrimaryColor:
-                            timerStore.activityStatus.activityColor,
+                            timerService.activityStatus.activityColor,
                         buttonTextColor:
-                            timerStore.activityStatus.circleButtonTextColor,
+                            timerService.activityStatus.circleButtonTextColor,
                         onPressed: countingTimer,
                       ),
                       CircleButton(
-                        label: timerStore.saveStatus.circleButtonLabel!,
-                        buttonPrimaryColor: timerStore.saveStatus.saveColor,
+                        label: timerService.saveStatus.circleButtonLabel!,
+                        buttonPrimaryColor: timerService.saveStatus.saveColor,
                         buttonTextColor:
-                            timerStore.saveStatus.circleButtonTextColor,
+                            timerService.saveStatus.circleButtonTextColor,
                         onPressed: countingStop,
                       ),
                     ],

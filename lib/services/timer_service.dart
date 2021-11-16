@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:movement_measure/services/geolocator_service.dart';
 import 'package:movement_measure/utilities/constants.dart';
 
@@ -75,10 +76,9 @@ class TimerService with ChangeNotifier {
   int _addDistanceCount = kDefaultAddDistanceCount;
 
   late Timer _timer;
-  DateTime _time = DateTime.utc(0, 0, 0);
+  DateTime _time = kInitialDateTime;
 
   GeolocatorService geolocator = GeolocatorService();
-  double addDistance = 0;
   double totalDistance = 0;
 
   ActivityStatus _activityStatus = ActivityStatus.start;
@@ -86,7 +86,7 @@ class TimerService with ChangeNotifier {
 
   ActivityStatus get activityStatus => _activityStatus;
   SaveStatus get saveStatus => _saveStatus;
-  DateTime get time => _time;
+  String get time => DateFormat.Hms().format(_time);
 
   int get addDistanceCount => _addDistanceCount;
 
@@ -118,9 +118,8 @@ class TimerService with ChangeNotifier {
   void clearTimer() {
     _activityStatus = ActivityStatus.start;
     _saveStatus = SaveStatus.stop;
-    _time = DateTime.utc(0, 0, 0);
+    _time = kInitialDateTime;
     _addDistanceCount = kDefaultAddDistanceCount;
-    addDistance = 0;
     totalDistance = 0;
     geolocator.setStartPosition();
     notifyListeners();
@@ -138,12 +137,12 @@ class TimerService with ChangeNotifier {
   void setDistance() async {
     await geolocator.setCurrntPosition();
     // 距離計算
-    var distance = geolocator.getBetweenDistance();
+    var distance =
+        double.parse(geolocator.getBetweenDistance().toStringAsFixed(2));
     print(distance);
-    print(addDistance);
-    addDistance += distance;
+    totalDistance += distance;
+    print(totalDistance);
     geolocator.eliminateDistance();
-    totalDistance = double.parse(addDistance.toStringAsFixed(2));
     notifyListeners();
   }
 

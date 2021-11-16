@@ -19,6 +19,7 @@ final kIosAdUnitId = bool.fromEnvironment('dart.vm.product')
     : "ca-app-pub-3940256099942544/2934735716";
 
 // Timer周り定数
+DateTime kInitialDateTime = DateTime.utc(0, 0, 0);
 int kDefaultAddDistanceCount = 10;
 String kDefaultMovementTime = DateFormat.Hms().format(DateTime.utc(0, 0, 0));
 
