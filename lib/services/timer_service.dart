@@ -134,7 +134,7 @@ class TimerService with ChangeNotifier {
     var distance =
         double.parse(geolocator.getBetweenDistance().toStringAsFixed(2));
     print(distance);
-    totalDistance += distance;
+    totalDistance = ((totalDistance * 100) + (distance * 100)) / 100;
     print(totalDistance);
     geolocator.eliminateDistance();
     notifyListeners();
