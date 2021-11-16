@@ -4,36 +4,36 @@ import 'package:movement_measure/services/geolocator_service.dart';
 import 'package:movement_measure/utilities/constants.dart';
 
 enum ActivityStatus {
-  stop,
-  during,
+  start,
   pause,
+  restart,
   clear,
 }
 
 extension ActivityExtension on ActivityStatus {
   static final Map<ActivityStatus, Color?> activityColors = {
-    ActivityStatus.stop: Colors.orange[900],
-    ActivityStatus.during: Colors.blueGrey,
-    ActivityStatus.pause: Colors.white,
-    ActivityStatus.clear: Colors.white,
+    ActivityStatus.start: kStartButtonColor,
+    ActivityStatus.pause: kPauseButtonColor,
+    ActivityStatus.restart: kRestartClearButtonColor,
+    ActivityStatus.clear: kRestartClearButtonColor,
   };
 
   Color? get activityColor => activityColors[this];
 
   static final Map<ActivityStatus, String> circleButtonLabels = {
-    ActivityStatus.stop: 'START',
-    ActivityStatus.during: 'PAUSE',
-    ActivityStatus.pause: 'RESTART',
+    ActivityStatus.start: 'START',
+    ActivityStatus.pause: 'PAUSE',
+    ActivityStatus.restart: 'RESTART',
     ActivityStatus.clear: 'CLEAR',
   };
 
   String? get circleButtonLabel => circleButtonLabels[this];
 
   static final Map<ActivityStatus, Color?> circleButtonTextColors = {
-    ActivityStatus.stop: Colors.white,
-    ActivityStatus.during: Colors.white,
-    ActivityStatus.pause: Colors.orange[900],
-    ActivityStatus.clear: Colors.orange[900],
+    ActivityStatus.start: kDefaultButtonTextColor,
+    ActivityStatus.pause: kDefaultButtonTextColor,
+    ActivityStatus.restart: kReversalButtonTextColor,
+    ActivityStatus.clear: kReversalButtonTextColor,
   };
 
   Color? get circleButtonTextColor => circleButtonTextColors[this];
@@ -46,8 +46,8 @@ enum SaveStatus {
 
 extension SaveExtension on SaveStatus {
   static final Map<SaveStatus, Color?> saveColors = {
-    SaveStatus.stop: Colors.orange,
-    SaveStatus.save: Colors.blueGrey,
+    SaveStatus.stop: kStopButtonColor,
+    SaveStatus.save: kSaveButtonColor,
   };
 
   Color? get saveColor => saveColors[this];
@@ -60,8 +60,8 @@ extension SaveExtension on SaveStatus {
   String? get circleButtonLabel => circleButtonLabels[this];
 
   static final Map<SaveStatus, Color?> circleButtonTextColors = {
-    SaveStatus.stop: Colors.white,
-    SaveStatus.save: Colors.white,
+    SaveStatus.stop: kDefaultButtonTextColor,
+    SaveStatus.save: kDefaultButtonTextColor,
   };
 
   Color? get circleButtonTextColor => circleButtonTextColors[this];
@@ -81,7 +81,7 @@ class TimerService with ChangeNotifier {
   double addDistance = 0;
   double totalDistance = 0;
 
-  ActivityStatus _activityStatus = ActivityStatus.stop;
+  ActivityStatus _activityStatus = ActivityStatus.start;
   SaveStatus _saveStatus = SaveStatus.stop;
 
   ActivityStatus get activityStatus => _activityStatus;
@@ -91,7 +91,7 @@ class TimerService with ChangeNotifier {
   int get addDistanceCount => _addDistanceCount;
 
   void startTimer() {
-    _activityStatus = ActivityStatus.during;
+    _activityStatus = ActivityStatus.pause;
     geolocator.setStartPosition();
     _timer = Timer.periodic(sec, (timer) {
       resetAddDistanceCount();
@@ -101,7 +101,7 @@ class TimerService with ChangeNotifier {
   }
 
   void pauseTimer() {
-    _activityStatus = ActivityStatus.pause;
+    _activityStatus = ActivityStatus.restart;
     if (_timer.isActive) {
       _timer.cancel();
     }
@@ -116,7 +116,7 @@ class TimerService with ChangeNotifier {
   }
 
   void clearTimer() {
-    _activityStatus = ActivityStatus.stop;
+    _activityStatus = ActivityStatus.start;
     _saveStatus = SaveStatus.stop;
     _time = DateTime.utc(0, 0, 0);
     _addDistanceCount = kDefaultAddDistanceCount;

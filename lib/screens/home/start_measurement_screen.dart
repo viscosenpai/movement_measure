@@ -56,11 +56,11 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
     recordService.uid = userId;
 
     void countingTimer() {
-      if (timerStore.activityStatus == ActivityStatus.stop ||
-          timerStore.activityStatus == ActivityStatus.pause) {
+      if (timerStore.activityStatus == ActivityStatus.start ||
+          timerStore.activityStatus == ActivityStatus.restart) {
         recordService.initDocument(userId);
         timerStore.startTimer();
-      } else if (timerStore.activityStatus == ActivityStatus.during) {
+      } else if (timerStore.activityStatus == ActivityStatus.pause) {
         timerStore.pauseTimer();
       } else if (timerStore.activityStatus == ActivityStatus.clear) {
         recordService.deleteDocument();
@@ -70,7 +70,7 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
 
     void countingStop() {
       if (timerStore.saveStatus == SaveStatus.stop &&
-          timerStore.activityStatus != ActivityStatus.stop) {
+          timerStore.activityStatus != ActivityStatus.start) {
         timerStore.stopTimer();
       } else if (timerStore.saveStatus == SaveStatus.save) {
         recordService.setDocument(
@@ -113,7 +113,6 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CircleButton(
-                        // label: activityState.circleButtonLabel!,
                         label: timerStore.activityStatus.circleButtonLabel!,
                         buttonPrimaryColor:
                             timerStore.activityStatus.activityColor,

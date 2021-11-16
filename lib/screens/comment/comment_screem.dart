@@ -52,7 +52,7 @@ class _CommentScreenState extends State<CommentScreen> {
       actions: [
         TextButton(
           onPressed: () {
-            if (timerStore.activityStatus == ActivityStatus.stop ||
+            if (timerStore.activityStatus == ActivityStatus.start ||
                 timerStore.saveStatus == SaveStatus.save) {
               showCommentValidationDialog(
                   context, S.of(context).measureValidMessage);

@@ -22,6 +22,17 @@ final kIosAdUnitId = bool.fromEnvironment('dart.vm.product')
 int kDefaultAddDistanceCount = 10;
 String kDefaultMovementTime = DateFormat.Hms().format(DateTime.utc(0, 0, 0));
 
+// ボタン背景色定数
+Color kStartButtonColor = Colors.orange.shade900;
+Color kPauseButtonColor = Colors.blueGrey;
+Color kRestartClearButtonColor = Colors.white;
+Color kSaveButtonColor = Colors.orange.shade900;
+Color kStopButtonColor = Colors.orange;
+
+// ボタン文字色定数
+Color kDefaultButtonTextColor = Colors.white;
+Color kReversalButtonTextColor = Colors.orange.shade900;
+
 // 透過背景定数
 ImageFilter kDefaultBlur = ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0);
 
@@ -37,13 +48,15 @@ PageRouteBuilder<dynamic> kPpageRouteBuilder(Widget widget) {
         Animation<double> secondaryAnimation, Widget child) {
       return SlideTransition(
         position: Tween<Offset>(
-          begin: const Offset(0.0, 1.0),
+          // begin: const Offset(0.0, 1.0),
+          begin: const Offset(1.0, 0.0),
           end: Offset.zero,
         ).animate(animation),
         child: SlideTransition(
           position: Tween<Offset>(
             begin: Offset.zero,
-            end: const Offset(0.0, 0.0),
+            // end: const Offset(0.0, 0.0),
+            end: const Offset(1.0, 1.0),
           ).animate(secondaryAnimation),
           child: child,
         ),
