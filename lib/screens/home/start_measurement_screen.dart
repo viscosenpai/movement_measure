@@ -50,13 +50,13 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
     final authService = Provider.of<AuthService>(context);
     final timerService = Provider.of<TimerService>(context);
     final recordService = Provider.of<RecordService>(context);
-    String userId = authService.user.uid;
-    recordService.uid = userId;
+    recordService.uid = authService.user.uid;
 
     void countingTimer() {
-      if (timerService.activityStatus == ActivityStatus.start ||
-          timerService.activityStatus == ActivityStatus.restart) {
-        recordService.initDocument(userId);
+      if (timerService.activityStatus == ActivityStatus.start) {
+        recordService.initDocument(recordService.uid);
+        timerService.startTimer();
+      } else if (timerService.activityStatus == ActivityStatus.restart) {
         timerService.startTimer();
       } else if (timerService.activityStatus == ActivityStatus.pause) {
         timerService.pauseTimer();
@@ -72,7 +72,7 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
         timerService.stopTimer();
       } else if (timerService.saveStatus == SaveStatus.save) {
         recordService.setDocument(
-            userId, timerService.totalDistance, timerService.time);
+            recordService.uid, timerService.totalDistance, timerService.time);
         recordService.saveDocument();
         timerService.clearTimer();
       }
