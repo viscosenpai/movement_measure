@@ -69,33 +69,27 @@ extension SaveExtension on SaveStatus {
 }
 
 class TimerService with ChangeNotifier {
-  var count = 0;
-  final sec = const Duration(seconds: 1);
-
-  // TODO: ユーザーが設定できるように
-  int _addDistanceCount = kDefaultAddDistanceCount;
-
   late Timer _timer;
   DateTime _time = kInitialDateTime;
+  String get time => DateFormat.Hms().format(_time);
 
   GeolocatorService geolocator = GeolocatorService();
   double totalDistance = 0;
+  // TODO: ユーザーが設定できるように
+  int _addDistanceCount = kDefaultAddDistanceCount;
+  int get addDistanceCount => _addDistanceCount;
 
   ActivityStatus _activityStatus = ActivityStatus.start;
-  SaveStatus _saveStatus = SaveStatus.stop;
-
   ActivityStatus get activityStatus => _activityStatus;
+  SaveStatus _saveStatus = SaveStatus.stop;
   SaveStatus get saveStatus => _saveStatus;
-  String get time => DateFormat.Hms().format(_time);
-
-  int get addDistanceCount => _addDistanceCount;
 
   void startTimer() {
     _activityStatus = ActivityStatus.pause;
     geolocator.setStartPosition();
-    _timer = Timer.periodic(sec, (timer) {
-      resetAddDistanceCount();
-      _time = _time.add(sec);
+    _timer = Timer.periodic(kSeconds, (timer) {
+      _resetAddDistanceCount();
+      _time = _time.add(kSeconds);
     });
     notifyListeners();
   }
@@ -125,16 +119,16 @@ class TimerService with ChangeNotifier {
     notifyListeners();
   }
 
-  void resetAddDistanceCount() {
+  void _resetAddDistanceCount() {
     if (_addDistanceCount == 0) {
-      setDistance();
+      _setDistance();
       _addDistanceCount = kDefaultAddDistanceCount;
     }
     _addDistanceCount--;
     notifyListeners();
   }
 
-  void setDistance() async {
+  void _setDistance() async {
     await geolocator.setCurrntPosition();
     // 距離計算
     var distance =
@@ -143,14 +137,6 @@ class TimerService with ChangeNotifier {
     totalDistance += distance;
     print(totalDistance);
     geolocator.eliminateDistance();
-    notifyListeners();
-  }
-
-  void updateCounter() {
-    if (count > 0)
-      count--;
-    else
-      _timer.cancel();
     notifyListeners();
   }
 

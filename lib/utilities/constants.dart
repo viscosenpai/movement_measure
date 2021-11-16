@@ -21,6 +21,7 @@ final kIosAdUnitId = bool.fromEnvironment('dart.vm.product')
 // Timer周り定数
 DateTime kInitialDateTime = DateTime.utc(0, 0, 0);
 int kDefaultAddDistanceCount = 10;
+Duration kSeconds = const Duration(seconds: 1);
 String kDefaultMovementTime = DateFormat.Hms().format(DateTime.utc(0, 0, 0));
 
 // ボタン背景色定数
