@@ -1,8 +1,7 @@
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
-import 'package:movement_measure/utilities/constants.dart';
+import 'package:movement_measure/utilities/date_time_formatter.dart';
 import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/services/ad_state.dart';
 import 'package:movement_measure/services/record_service.dart';
@@ -52,6 +51,7 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
     final authService = Provider.of<AuthService>(context);
     final timerStore = Provider.of<TimerService>(context);
     final recordService = Provider.of<RecordService>(context);
+    final datetimeFormatter = DateTimeFormatter();
     String userId = authService.user.uid;
     recordService.uid = userId;
 
@@ -101,7 +101,7 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
                   ),
                 ),
                 Text(
-                  DateFormat.Hms().format(timerStore.time),
+                  datetimeFormatter.toClockTime(timerStore.time),
                   style: TextStyle(
                     fontSize: 60.0,
                     fontWeight: FontWeight.bold,

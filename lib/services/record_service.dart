@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:movement_measure/utilities/constants.dart';
+import 'package:movement_measure/utilities/date_time_formatter.dart';
 import 'package:movement_measure/models/record_model.dart';
 import 'package:movement_measure/models/comment_model.dart';
 
@@ -15,6 +16,7 @@ class RecordService extends ChangeNotifier {
 
   RecordService();
 
+  final datetimeFormatter = DateTimeFormatter();
   CollectionReference dataPath =
       FirebaseFirestore.instance.collection('records');
 
@@ -66,7 +68,7 @@ class RecordService extends ChangeNotifier {
     Timestamp updatedAtTimestamp = Timestamp.fromDate(now);
     _record['userId'] = userId;
     _record['movementDistance'] = distance;
-    _record['movementTime'] = DateFormat.Hms().format(time);
+    _record['movementTime'] = datetimeFormatter.toClockTime(time);
     _record['recordDate'] = updatedAtTimestamp;
   }
 
