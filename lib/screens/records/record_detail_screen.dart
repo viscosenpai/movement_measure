@@ -5,7 +5,7 @@ import 'package:movement_measure/generated/l10n.dart';
 import 'package:movement_measure/services/record_service.dart';
 import 'package:movement_measure/screens/records/record_list_screen.dart';
 import 'package:movement_measure/utilities/constants.dart';
-import 'package:movement_measure/widgets/comment_card.dart';
+import 'package:movement_measure/widgets/record_detail_card.dart';
 import 'package:movement_measure/widgets/message_box.dart';
 import 'package:movement_measure/widgets/loader.dart';
 
@@ -22,7 +22,6 @@ class RecordDetailScreen extends StatelessWidget {
     return BackdropFilter(
       filter: kDefaultBlur,
       child: Scaffold(
-        backgroundColor: Colors.transparent,
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
@@ -78,103 +77,14 @@ class RecordDetail extends StatelessWidget {
               final dateTime = recordService
                   .toDateTimeString(recordService.record['recordDate']);
               final splitDate = dateTime.split(' ');
-              return Container(
-                color: Color(0x99000000),
-                margin: EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Text(
-                      '${splitDate[0]}',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                    Text(
-                      '${splitDate[1]}',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        border: Border.all(
-                          color: Colors.white,
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${recordService.record["movementTime"]}',
-                            style: TextStyle(
-                              fontSize: 40.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            '${recordService.record["movementDistance"]} m',
-                            style: TextStyle(
-                              fontSize: 40.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 30.0,
-                          ),
-                          GetCommentDataStream(docId: id),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
+              return RecordDetailCard(
+                  splitDate: splitDate, recordService: recordService, id: id);
             }
 
             return Loader();
           },
         ),
       ),
-    );
-  }
-}
-
-class GetCommentDataStream extends StatelessWidget {
-  GetCommentDataStream({Key? key, required this.docId}) : super(key: key);
-
-  final String docId;
-
-  Widget build(BuildContext context) {
-    final recordService = Provider.of<RecordService>(context);
-
-    return StreamBuilder<QuerySnapshot>(
-      stream: recordService.getCommentStream(docId),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          print(snapshot.error);
-          return MessageBox(message: 'Something went wrong');
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Loader();
-        }
-
-        if (snapshot.hasData) {
-          recordService.initComment(snapshot.data!.docs);
-        }
-
-        var commentCards = recordService.comments.map((comment) {
-          return CommentCard(comment: comment);
-        }).toList();
-
-        return Column(
-          children: commentCards,
-        );
-      },
     );
   }
 }
