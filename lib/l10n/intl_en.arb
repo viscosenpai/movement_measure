@@ -1,4 +1,6 @@
 {
+  "showLocationDescriptionTitle": "Confirmation of location data",
+  "showLocationDescriptionBody": "Movement Measure collects location data to enable measurement of distance traveled even when the app is closed or not in use.\n\nTo allow location data in the background, select \"OK\" and then set \"Allow while using App\" in the Location Acquisition Permission dialog.",
   "updaterTitle": "Version Update Information",
   "updaterContent": "A new version of the app is available. Please get the updated version from the store and use it.",
   "updaterButtonLabel": "Update now",

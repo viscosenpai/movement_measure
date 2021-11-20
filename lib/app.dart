@@ -47,7 +47,14 @@ class App extends StatelessWidget {
   }
 }
 
-class SignProcess extends StatelessWidget {
+class SignProcess extends StatefulWidget {
+  @override
+  _SignProcessState createState() => _SignProcessState();
+}
+
+class _SignProcessState extends State<SignProcess> {
+  bool isDoneTutorial = false;
+
   void _showIntroductionPages(BuildContext context) async {
     final pref = await SharedPreferences.getInstance();
 
@@ -57,6 +64,9 @@ class SignProcess extends StatelessWidget {
         MaterialPageRoute(
           builder: (context) => IntroductionPages(
             onDone: () {
+              setState(() {
+                isDoneTutorial = true;
+              });
               Navigator.pop(context);
             },
           ),
@@ -64,31 +74,45 @@ class SignProcess extends StatelessWidget {
         ),
       );
       pref.setBool('isAlreadyFirstLaunch', true);
+    } else {
+      setState(() {
+        isDoneTutorial = true;
+      });
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     WidgetsBinding.instance
         ?.addPostFrameCallback((_) => _showIntroductionPages(context));
-    return Consumer(
-      builder: (context, AuthService authService, _) {
-        // ログインの状態に応じて処理を遷移させる。
-        switch (authService.status) {
-          case Status.uninitialized:
-            print('uninitialized');
-            return Center(child: BackgroundTitleScreen());
-          case Status.unauthenticated:
-          case Status.authenticating:
-            print('anonymously');
-            authService.signInAnonymously();
-            return Center(child: BackgroundTitleScreen());
-          case Status.authenticated:
-            print("authenticated");
-            break;
-        }
-        return Home();
-      },
-    );
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('isDoneTutorial: $isDoneTutorial');
+    if (isDoneTutorial) {
+      return Consumer(
+        builder: (context, AuthService authService, _) {
+          // ログインの状態に応じて処理を遷移させる。
+          switch (authService.status) {
+            case Status.uninitialized:
+              print('uninitialized');
+              return Center(child: BackgroundTitleScreen());
+            case Status.unauthenticated:
+            case Status.authenticating:
+              print('anonymously');
+              authService.signInAnonymously();
+              return Center(child: BackgroundTitleScreen());
+            case Status.authenticated:
+              print("authenticated");
+              break;
+          }
+          return Home();
+        },
+      );
+    } else {
+      return Container();
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
+import 'package:movement_measure/generated/l10n.dart';
 import 'package:movement_measure/services/auth_service.dart';
 import 'package:movement_measure/services/ad_state.dart';
 import 'package:movement_measure/services/record_service.dart';
@@ -19,6 +20,8 @@ class StartMeasurementScreen extends StatefulWidget {
 class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
   late BannerAd banner;
   bool isLoadedBannerAd = false;
+  GeolocatorService geolocator = GeolocatorService();
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -39,9 +42,49 @@ class _StartMeasurementScreenState extends State<StartMeasurementScreen> {
 
   @override
   void initState() {
-    GeolocatorService geolocator = GeolocatorService();
-    geolocator.setStartPosition();
+    //
+    Future.delayed(Duration.zero, () async {
+      bool hasLocationPermission = await geolocator.hasLocationPermission();
+      if (!hasLocationPermission) {
+        showLocationDescriptionDialog(context);
+      } else {
+        geolocator.setStartPosition();
+      }
+    });
     super.initState();
+  }
+
+  Future<dynamic> showLocationDescriptionDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        final btnLabel = "OK";
+        return new AlertDialog(
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(side: BorderSide(color: Colors.white)),
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+          ),
+          title: Text(S.of(context).showLocationDescriptionTitle),
+          contentTextStyle: TextStyle(fontSize: 18.0),
+          content: Text(S.of(context).showLocationDescriptionBody),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                btnLabel,
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                geolocator.resolveLocationPermission();
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

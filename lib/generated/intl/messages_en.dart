@@ -47,6 +47,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "measureValidMessage": MessageLookupByLibrary.simpleMessage(
             "You can only add comments during the measurement."),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "showLocationDescriptionBody": MessageLookupByLibrary.simpleMessage(
+            "Movement Measure collects location data to enable measurement of distance traveled even when the app is closed or not in use.\n\nTo allow location data in the background, select \"OK\" and then set \"Allow while using App\" in the Location Acquisition Permission dialog."),
+        "showLocationDescriptionTitle": MessageLookupByLibrary.simpleMessage(
+            "Confirmation of location data"),
         "updaterButtonLabel":
             MessageLookupByLibrary.simpleMessage("Update now"),
         "updaterContent": MessageLookupByLibrary.simpleMessage(

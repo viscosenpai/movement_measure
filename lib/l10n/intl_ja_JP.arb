@@ -1,4 +1,6 @@
 {
+  "showLocationDescriptionTitle": "位置情報取得の確認",
+  "showLocationDescriptionBody": "MovementMeasureは、位置情報を収集することで、アプリを閉じているときや使用していないときでも移動距離を計測することができます。\n\nバックグラウンドでの位置情報取得を許可するには、「OK」を選択したのち、位置情報取得許可ダイアログにて「Appの使用中は許可」を設定してください。",
   "updaterTitle": "バージョン更新のお知らせ",
   "updaterContent": "新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい。",
   "updaterButtonLabel": "今すぐ更新",

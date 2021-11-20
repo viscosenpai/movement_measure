@@ -44,6 +44,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "measureValidMessage":
             MessageLookupByLibrary.simpleMessage("コメントを投稿できるのは計測中のみとなります。"),
         "settings": MessageLookupByLibrary.simpleMessage("設定"),
+        "showLocationDescriptionBody": MessageLookupByLibrary.simpleMessage(
+            "MovementMeasureは、位置情報を収集することで、アプリを閉じているときや使用していないときでも移動距離を計測することができます。\n\nバックグラウンドでの位置情報取得を許可するには、「OK」を選択したのち、位置情報取得許可ダイアログにて「Appの使用中は許可」を設定してください。"),
+        "showLocationDescriptionTitle":
+            MessageLookupByLibrary.simpleMessage("位置情報取得の確認"),
         "updaterButtonLabel": MessageLookupByLibrary.simpleMessage("今すぐ更新"),
         "updaterContent": MessageLookupByLibrary.simpleMessage(
             "新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい。"),

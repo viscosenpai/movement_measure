@@ -5,16 +5,30 @@ class GeolocatorService {
   late double startLongitude;
   late double endLatitude;
   late double endLongitude;
+  late LocationPermission permission;
 
   Future<Position> _getDeterminePosition() async {
     bool serviceEnabled;
-    LocationPermission permission;
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return Future.error('Location services are disabled.');
     }
 
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  }
+
+  Future<bool> hasLocationPermission() async {
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> resolveLocationPermission() async {
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -27,9 +41,6 @@ class GeolocatorService {
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-
-    return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
   }
 
   Future<void> setStartPosition() async {

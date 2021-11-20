@@ -50,6 +50,26 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `Confirmation of location data`
+  String get showLocationDescriptionTitle {
+    return Intl.message(
+      'Confirmation of location data',
+      name: 'showLocationDescriptionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Movement Measure collects location data to enable measurement of distance traveled even when the app is closed or not in use.\n\nTo allow location data in the background, select "OK" and then set "Allow while using App" in the Location Acquisition Permission dialog.`
+  String get showLocationDescriptionBody {
+    return Intl.message(
+      'Movement Measure collects location data to enable measurement of distance traveled even when the app is closed or not in use.\n\nTo allow location data in the background, select "OK" and then set "Allow while using App" in the Location Acquisition Permission dialog.',
+      name: 'showLocationDescriptionBody',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Version Update Information`
   String get updaterTitle {
     return Intl.message(
