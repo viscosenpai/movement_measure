@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  Runner
+
+  Created by KAMA Hiroki on 2021/11/23.
+  
+*/
+NSLocationWhenInUseUsageDescription = "Movement Measure は位置情報を利用して移動距離の計測を行います。";
