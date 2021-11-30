@@ -170,6 +170,36 @@ class S {
     );
   }
 
+  /// `Share`
+  String get share {
+    return Intl.message(
+      'Share',
+      name: 'share',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Movement Measure\nCreate your own record of your movement.`
+  String get appShareText {
+    return Intl.message(
+      'Movement Measure\nCreate your own record of your movement.',
+      name: 'appShareText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Review`
+  String get review {
+    return Intl.message(
+      'Review',
+      name: 'review',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `About MovementMeasure`
   String get aboutMenuTitle {
     return Intl.message(

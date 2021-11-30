@@ -25,6 +25,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "aboutMenuTitle":
             MessageLookupByLibrary.simpleMessage("About MovementMeasure"),
         "add": MessageLookupByLibrary.simpleMessage("add"),
+        "appShareText": MessageLookupByLibrary.simpleMessage(
+            "Movement Measure\nCreate your own record of your movement."),
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "commentValidMessage":
             MessageLookupByLibrary.simpleMessage("Please enter a comment."),
@@ -46,7 +48,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "Let\'s look back on our daily journey."),
         "measureValidMessage": MessageLookupByLibrary.simpleMessage(
             "You can only add comments during the measurement."),
+        "review": MessageLookupByLibrary.simpleMessage("Review"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "share": MessageLookupByLibrary.simpleMessage("Share"),
         "showLocationDescriptionBody": MessageLookupByLibrary.simpleMessage(
             "Movement Measure collects location data to enable measurement of distance traveled even when the app is closed or not in use.\n\nTo allow location data in the background, select \"OK\" and then set \"Allow while using App\" in the Location Acquisition Permission dialog."),
         "showLocationDescriptionTitle": MessageLookupByLibrary.simpleMessage(
