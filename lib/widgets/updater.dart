@@ -34,11 +34,11 @@ class _UpdaterState extends State<Updater> {
 
   // FIXME ストアにアプリを登録したらurlが入れられる
   static const APP_STORE_URL =
-      'https://apps.apple.com/jp/app/id[アプリのApple ID]?mt=8';
+      'https://apps.apple.com/jp/app/id1593339195?mt=8';
 
   // FIXME ストアにアプリを登録したらurlが入れられる
   static const PLAY_STORE_URL =
-      'https://play.google.com/store/apps/details?id=[アプリのパッケージ名]';
+      'https://play.google.com/store/apps/details?id=viscosenpai.github.io.movement_measure';
 
   /// 指定のURLを起動する. App Store or Play Storeのリンク
   void _launchURL(String url) async {
